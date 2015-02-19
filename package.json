@@ -1,0 +1,39 @@
+{
+  "name": "playtube",
+  "version": "1.0.0",
+  "description": "YouTube iframe API abstraction.",
+  "main": "src/playtube.js",
+  "author": "Gajus Kuizinas <gk@anuary.com>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gajus/playtube"
+  },
+  "keywords": [
+    "youtube",
+    "api",
+    "promise",
+    "video",
+    "player"
+  ],
+  "scrips": {
+    "test": "gulp test"
+  },
+  "devDependencies": {
+    "6to5ify": "^4.1.1",
+    "browserify": "^8.1.3",
+    "gulp": "^3.8.11",
+    "gulp-eslint": "^0.4.3",
+    "gulp-mocha": "^2.0.0",
+    "gulp-sourcemaps": "^1.3.0",
+    "gulp-uglify": "^1.1.0",
+    "jsonfile": "^2.0.0",
+    "vinyl-buffer": "^1.0.0",
+    "vinyl-source-stream": "^1.0.0",
+    "watchify": "^2.3.0"
+  },
+  "dependencies": {
+    "bluebird": "^2.9.10",
+    "load-script": "0.0.5",
+    "sister": "^3.0.0"
+  }
+}
