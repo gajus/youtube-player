@@ -18,7 +18,7 @@ util.bundler = watchify(util.bundler);
 util.bundleName = function () {
     var pkg = jsonfile.readFileSync('./package.json');
 
-    return pkg.name + '.' + pkg.version + '.min.js';
+    return pkg.name + '.min.js';
 };
 
 gulp.task('lint', function () {

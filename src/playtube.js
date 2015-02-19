@@ -7,8 +7,8 @@ var playtube = {},
     _ = require('lodash'),
     Sister = require('sister'),
     Promise = require('bluebird'),
-    iframeAPIReady,
-    load;
+    load = require('load-script'),
+    iframeAPIReady;
 
 iframeAPIReady = new Promise(function (resolve) {
     // The API will call this function when the page has finished downloading
@@ -29,31 +29,34 @@ load('https://www.youtube.com/iframe_api');
  * excluding the events object.
  */
 playtube.player = function (elementId, options) {
-    return iframeAPIReady.then(function () {
-        var playerAPI = {},
-            playerAPIReady,
-            player,
-            emitter = Sister();
+    var playerAPI = {},
+        playerAPIReady,
+        emitter = Sister();
 
-        options = options || {};
+    options = options || {};
 
-        if (options.events) {
-            throw new Error('Event handlers cannot be overwritten.');
-        }
+    if (options.events) {
+        throw new Error('Event handlers cannot be overwritten.');
+    }
 
-        options.events = Playtube.proxyEvents(emitter);
+    options.events = Playtube.proxyEvents(emitter);
 
-        player = new window.YT.Player(elementId, options);
-
-        playerAPIReady = new Promise(function (resolve) {
-            emitter.on('ready', resolve);
-        });
-
-        playerAPI = Playtube.promisifyPlayer(playerAPIReady, player);
-        playerAPI.on = emitter.on;
-
-        return playerAPI;
+    playerAPIReady = new Promise(function (resolve) {
+        iframeAPIReady
+            .then(function () {
+                return new window.YT.Player(elementId, options);
+            })
+            .then(function (player) {
+                emitter.on('ready', function () {
+                    resolve(player);
+                });
+            });
     });
+
+    playerAPI = Playtube.promisifyPlayer(playerAPIReady);
+    playerAPI.on = emitter.on;
+
+    return playerAPI;
 };
 
 /**
@@ -92,9 +95,8 @@ Playtube.proxyEvents = function (emitter) {
  *
  * @todo Proxy all of the methods using Object.keys.
  * @param {Promise} playerAPIReady Promise that resolves when player is ready.
- * @param {Object} player Reference to the player instance
  */
-Playtube.promisifyPlayer = function (playerAPIReady, player) {
+Playtube.promisifyPlayer = function (playerAPIReady) {
     var playerAPI = {},
         methods;
 
@@ -104,13 +106,17 @@ Playtube.promisifyPlayer = function (playerAPIReady, player) {
         playerAPI[name] = function () {
             var callArguments = arguments;
 
-            return playerAPIReady.then(function () {
-                return player[name](callArguments);
-            });
+            return playerAPIReady
+                .then(function (player) {
+                    return player[name](callArguments);
+                });
         };
     });
 
     return playerAPI;
 };
+
+window.gajus = window.gajus || {};
+window.gajus.playtube = playtube;
 
 module.exports = playtube;
