@@ -17,7 +17,7 @@ Playtube:
 
 ## Example
 
-```js
+```html+js
 <!DOCTYPE html>
 <html>
 <head>
@@ -68,7 +68,7 @@ npm install playtube
 
 When using Bower distribution (`./dist/playtube.min.js`) `playtube` is available under `window.gajus` namespace.
 
-```js
+```html+js
 <!DOCTYPE html>
 <html>
 <head>
