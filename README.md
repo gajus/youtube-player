@@ -1,7 +1,7 @@
 # Playtube
 
-[![NPM version](http://img.shields.io/npm/v/playtube.svg?style=flat)](https://www.npmjs.org/package/playtube.svg)
-[![Bower version](https://badge.fury.io/bo/playtube.svg.svg?v1)](http://badge.fury.io/bo/playtube.svg)
+[![NPM version](http://img.shields.io/npm/v/playtube.svg?style=flat)](https://www.npmjs.com/package/playtube)
+[![Bower version](https://badge.fury.io/bo/playtube.svg)](http://bower.io/search/?q=playtube)
 
 Playtube is an abstraction of [YouTube Player IFrame API](https://developers.google.com/youtube/iframe_api_reference) (YPIA).
 
