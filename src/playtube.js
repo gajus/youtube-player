@@ -51,6 +51,13 @@ playtube.player = function (elementId, options) {
             .then(function (player) {
                 emitter.on('ready', function () {
                     resolve(player);
+
+                    // Until Proxies become available, this is the only way to Promisify the SDK.
+                    /*methods = _.map(_.functions(player), function (name) {
+                        return '\'' + name + '\'';
+                    });
+
+                    console.log(methods.join(', '));*/
                 });
             });
     });
@@ -102,7 +109,7 @@ Playtube.promisifyPlayer = function (playerAPIReady) {
     var playerAPI = {},
         methods;
 
-    methods = ['playVideo', 'stopVideo'];
+    methods = ['cueVideoById', 'loadVideoById', 'cueVideoByUrl', 'loadVideoByUrl', 'playVideo', 'pauseVideo', 'stopVideo', 'clearVideo', 'getVideoBytesLoaded', 'getVideoBytesTotal', 'getVideoLoadedFraction', 'getVideoStartBytes', 'cuePlaylist', 'loadPlaylist', 'nextVideo', 'previousVideo', 'playVideoAt', 'setShuffle', 'setLoop', 'getPlaylist', 'getPlaylistIndex', 'getPlaylistId', 'loadModule', 'unloadModule', 'setOption', 'mute', 'unMute', 'isMuted', 'setVolume', 'getVolume', 'seekTo', 'getPlayerState', 'getPlaybackRate', 'setPlaybackRate', 'getAvailablePlaybackRates', 'getPlaybackQuality', 'setPlaybackQuality', 'getAvailableQualityLevels', 'getCurrentTime', 'getDuration', 'removeEventListener', 'getVideoUrl', 'getDebugText', 'getVideoData', 'addCueRange', 'removeCueRange', 'getApiInterface', 'showVideoInfo', 'hideVideoInfo', 'G', 'C', 'R', 'aa', '$', 'Z', 'getVideoEmbedCode', 'getOptions', 'getOption', 'Y', 'X', 'addEventListener', 'destroy', 'A', 'P', 'J', 'setSize', 'getIframe'];
 
     _.forEach(methods, function (methodName) {
         playerAPI[methodName] = function () {
