@@ -17,9 +17,34 @@ Playtube:
 
 ## Example
 
-* [Playing video](./examples/playing-video).
-* [Multiple players](./examples/multiple-players).
-* [Registering events handlers](./examples/registering-event-handlers).
+* [Playing video](./examples/playing-video/index.html).
+* [Multiple players](./examples/multiple-players/index.html).
+* [Registering events handlers](./examples/registering-event-handlers/index.html).
+
+```js
+var playtube = require('playtube'),
+    player;
+
+player = playtube.player('video-player', {
+    videoId: 'M7lc1UVf-VE'
+});
+
+// All methods are promises.
+// "playVideo" is queued and will execute as soon as player is ready.
+player
+    .playVideo()
+    .then(function () {
+        // Promise is resolved after method is executed, i.e. after iframe API and video player have been loaded and "playVideo" method executed.
+    });
+
+// "stopVideo" is queued after "playVideo". This will cause video to start buffering.
+player.stopVideo();
+
+// Events are proxied through player.on event emitter.
+player.on('stateChange', function (event) {
+    // event.data
+});
+```
 
 ## Download
 
