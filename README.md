@@ -15,6 +15,8 @@ Playtube:
 * Registers listeners required to establish when YPIA has been loaded (abstracted; you don't see them).
 * Uses Promises to abstract player API state (you can use the API without tracking the state of the player).
 
+Playtube and please [tweet it](https://twitter.com/intent/retweet?tweet_id=569169736971522048) if you like it. : )
+
 ## Example
 
 * [Playing video](./examples/playing-video/index.html).
