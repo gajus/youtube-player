@@ -17,38 +17,9 @@ Playtube:
 
 ## Example
 
-```html+js
-<!DOCTYPE html>
-<html>
-<head>
-    <script src="./bower_components/playtube/dist/playtube.min.js"></script>
-</head>
-<body>
-    <div id="my-player-1"></div>
-    <div id="my-player-2"></div>
-    <script>
-    var playtube = window.gajus.playtube,
-        player1,
-        player2;
-
-    player1 = playtube.player('my-player-1', {
-        videoId: '123'
-    });
-    player2 = playtube.player('my-player-2', {
-        videoId: '123'
-    });
-
-    // player1 will start to play as soon as player is loaded.
-    player1.playVideo();
-
-    // player2 will start to play as soon as player is loaded.
-    // All the API calls are queued, therefore it will stop immediately after.
-    player2.playVideo();
-    player2.stopVideo();
-    </script>
-</body>
-</html>
-```
+* [Playing video](./examples/playing-video).
+* [Multiple players](./examples/multiple-players).
+* [Registering events handlers](./examples/registering-event-handlers).
 
 ## Download
 
@@ -68,7 +39,7 @@ npm install playtube
 
 When using Bower distribution (`./dist/playtube.min.js`) `playtube` is available under `window.gajus` namespace.
 
-```html+js
+```html
 <!DOCTYPE html>
 <html>
 <head>

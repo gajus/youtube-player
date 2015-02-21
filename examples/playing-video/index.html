@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="./../../dist/playtube.min.js"></script>
+</head>
+<body>
+    <div id="player-1"></div>
+
+    <script>
+    var playtube = gajus.playtube,
+        player1,
+        firstStateChange;
+
+    player1 = playtube.player('player-1', {
+        videoId: 'M7lc1UVf-VE'
+    });
+
+    player1
+        // Play video is a Promise.
+        // "playVideo" is queued and will execute as soon as player is ready.
+        .playVideo()
+        .then(function () {
+            console.log('Starting to play player1. It will take some time to buffer video before it starts playing.');
+        });
+    </script>
+</body>
+</html>

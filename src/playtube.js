@@ -11,7 +11,7 @@ var playtube = {},
     iframeAPIReady;
 
 iframeAPIReady = new Promise(function (resolve) {
-    // The API will call this function when the page has finished downloading
+    // The API will call this function when page has finished downloading
     // the JavaScript for the player API
     window.onYouTubeIframeAPIReady = function () {
         resolve();
@@ -35,6 +35,10 @@ playtube.player = function (elementId, options) {
 
     if (options.events) {
         throw new Error('Event handlers cannot be overwritten.');
+    }
+
+    if (_.isString(elementId) && !document.getElementById(elementId)) {
+        throw new Error('Element "#' + elementId + '" does not exist.');
     }
 
     options.events = Playtube.proxyEvents(emitter);
@@ -67,23 +71,23 @@ playtube.player = function (elementId, options) {
  */
 Playtube.proxyEvents = function (emitter) {
     return {
-        onReady: function () {
-            emitter.trigger('ready');
+        onReady: function (event) {
+            emitter.trigger('ready', event);
         },
-        onStateChange: function () {
-            emitter.trigger('stateChange');
+        onStateChange: function (event) {
+            emitter.trigger('stateChange', event);
         },
-        onPlaybackQualityChange: function () {
-            emitter.trigger('playbackQualityChange');
+        onPlaybackQualityChange: function (event) {
+            emitter.trigger('playbackQualityChange', event);
         },
-        onPlaybackRateChange: function () {
-            emitter.trigger('playbackRateChange');
+        onPlaybackRateChange: function (event) {
+            emitter.trigger('playbackRateChange', event);
         },
-        onError: function () {
-            emitter.trigger('error');
+        onError: function (event) {
+            emitter.trigger('error', event);
         },
-        onApiChange: function () {
-            emitter.trigger('apiChange');
+        onApiChange: function (event) {
+            emitter.trigger('apiChange', event);
         }
     };
 };
@@ -100,13 +104,13 @@ Playtube.promisifyPlayer = function (playerAPIReady) {
 
     methods = ['playVideo', 'stopVideo'];
 
-    _.forEach(methods, function (name) {
-        playerAPI[name] = function () {
+    _.forEach(methods, function (methodName) {
+        playerAPI[methodName] = function () {
             var callArguments = arguments;
 
             return playerAPIReady
                 .then(function (player) {
-                    return player[name](callArguments);
+                    player[methodName].apply(player, callArguments);
                 });
         };
     });

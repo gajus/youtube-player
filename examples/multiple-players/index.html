@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="./../../dist/playtube.min.js"></script>
+</head>
+<body>
+    <div id="player-1"></div>
+    <div id="player-2"></div>
+
+    <script>
+    var playtube = gajus.playtube,
+        player1,
+        player2;
+
+    player1 = playtube.player('player-1', {
+        videoId: 'M7lc1UVf-VE'
+    });
+
+    player2 = playtube.player('player-2', {
+        videoId: 'SRo9RcE65lo'
+    });
+    </script>
+</body>
+</html>
