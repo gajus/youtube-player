@@ -21,8 +21,6 @@ iframeAPIReady = new Promise(function (resolve) {
 load('https://www.youtube.com/iframe_api');
 
 /**
- *
- *
  * @param {HTMLElement|String} elementId Either the DOM element or the id of
  * the HTML element where the API will insert the <iframe> tag containing the player.
  * @param {Object} options Video player options (https://developers.google.com/youtube/iframe_api_reference#Loading_a_Video_Player)

@@ -1,11 +1,13 @@
+'use strict';
+
 var util = {},
     gulp = require('gulp'),
-    mocha = require('gulp-mocha'),
     eslint = require('gulp-eslint'),
     watchify = require('watchify'),
     browserify = require('browserify'),
     to5ify = require('6to5ify'),
     sourcemaps = require('gulp-sourcemaps'),
+    header = require('gulp-header'),
     uglify = require('gulp-uglify'),
     source = require('vinyl-source-stream'),
     buffer = require('vinyl-buffer'),
@@ -29,13 +31,7 @@ gulp.task('lint', function () {
         .pipe(eslint.failOnError());
 });
 
-gulp.task('test', ['lint'], function () {
-    return gulp
-        .src(['./tests/*.js'], {read: false})
-        .pipe(mocha());
-});
-
-gulp.task('bundle', ['test'], function () {
+gulp.task('bundle', ['lint'], function () {
     return util.bundler
         .bundle()
         .on('error', function(err) {
@@ -47,10 +43,30 @@ gulp.task('bundle', ['test'], function () {
         // .pipe(uglify())
         .pipe(sourcemaps.write('./'))
         .pipe(gulp.dest('./dist/'));
-})
+});
+
+gulp.task('version', ['bundle'], function () {
+    var name = 'contents',
+        pkg = jsonfile.readFileSync('./package.json'),
+        bower = jsonfile.readFileSync('./bower.json');
+
+    gulp
+        .src('./dist/' + util.bundleName())
+        .pipe(header('/**\n * @version <%= version %>\n * @link https://github.com/gajus/' + name + ' for the canonical source repository\n * @license https://github.com/gajus/' + name + '/blob/master/LICENSE BSD 3-Clause\n */\n', {version: pkg.version}))
+        .pipe(gulp.dest('./dist/'));
+
+    bower.name = pkg.name;
+    bower.description = pkg.description;
+    bower.version = pkg.version;
+    bower.keywords = pkg.keywords;
+    bower.license = pkg.license;
+    bower.authors = [pkg.author];
+
+    jsonfile.writeFileSync('./bower.json', bower);
+});
 
 gulp.task('watch', function () {
     gulp.watch(['./src/**/*', './tests/**/*'], ['default']);
 });
 
-gulp.task('default', ['bundle']);
+gulp.task('default', ['version']);
