@@ -1,6 +1,6 @@
 {
   "main": "dist/playtube.min.js",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "name": "playtube",
   "description": "YouTube iframe API abstraction.",
   "keywords": [
