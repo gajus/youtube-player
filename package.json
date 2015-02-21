@@ -1,6 +1,6 @@
 {
   "name": "playtube",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "YouTube iframe API abstraction.",
   "main": "src/playtube.js",
   "author": "Gajus Kuizinas <gk@anuary.com>",
