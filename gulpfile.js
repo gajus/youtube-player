@@ -5,7 +5,7 @@ var util = {},
     eslint = require('gulp-eslint'),
     watchify = require('watchify'),
     browserify = require('browserify'),
-    to5ify = require('6to5ify'),
+    babelify = require('babelify'),
     sourcemaps = require('gulp-sourcemaps'),
     header = require('gulp-header'),
     uglify = require('gulp-uglify'),
@@ -14,7 +14,7 @@ var util = {},
     jsonfile = require('jsonfile');
 
 util.bundler = browserify('./src/playtube.js', watchify.args);
-util.bundler.transform(to5ify);
+util.bundler.transform(babelify);
 util.bundler = watchify(util.bundler);
 
 util.bundleName = function () {
@@ -40,7 +40,7 @@ gulp.task('bundle', ['lint'], function () {
         .pipe(source(util.bundleName()))
         .pipe(buffer())
         .pipe(sourcemaps.init({loadMaps: true}))
-        // .pipe(uglify())
+        .pipe(uglify())
         .pipe(sourcemaps.write('./'))
         .pipe(gulp.dest('./dist/'));
 });

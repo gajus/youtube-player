@@ -4,9 +4,8 @@
 
 var playtube = {},
     Playtube = {},
-    _ = require('lodash'),
     Sister = require('sister'),
-    Promise = require('bluebird'),
+    Promise = require('promise'),
     load = require('load-script'),
     iframeAPIReady;
 
@@ -37,7 +36,7 @@ playtube.player = function (elementId, options) {
         throw new Error('Event handlers cannot be overwritten.');
     }
 
-    if (_.isString(elementId) && !document.getElementById(elementId)) {
+    if (typeof elementId === 'string' && !document.getElementById(elementId)) {
         throw new Error('Element "#' + elementId + '" does not exist.');
     }
 
@@ -111,7 +110,7 @@ Playtube.promisifyPlayer = function (playerAPIReady) {
 
     methods = ['cueVideoById', 'loadVideoById', 'cueVideoByUrl', 'loadVideoByUrl', 'playVideo', 'pauseVideo', 'stopVideo', 'clearVideo', 'getVideoBytesLoaded', 'getVideoBytesTotal', 'getVideoLoadedFraction', 'getVideoStartBytes', 'cuePlaylist', 'loadPlaylist', 'nextVideo', 'previousVideo', 'playVideoAt', 'setShuffle', 'setLoop', 'getPlaylist', 'getPlaylistIndex', 'getPlaylistId', 'loadModule', 'unloadModule', 'setOption', 'mute', 'unMute', 'isMuted', 'setVolume', 'getVolume', 'seekTo', 'getPlayerState', 'getPlaybackRate', 'setPlaybackRate', 'getAvailablePlaybackRates', 'getPlaybackQuality', 'setPlaybackQuality', 'getAvailableQualityLevels', 'getCurrentTime', 'getDuration', 'removeEventListener', 'getVideoUrl', 'getDebugText', 'getVideoData', 'addCueRange', 'removeCueRange', 'getApiInterface', 'showVideoInfo', 'hideVideoInfo', 'G', 'C', 'R', 'aa', '$', 'Z', 'getVideoEmbedCode', 'getOptions', 'getOption', 'Y', 'X', 'addEventListener', 'destroy', 'A', 'P', 'J', 'setSize', 'getIframe'];
 
-    _.forEach(methods, function (methodName) {
+    methods.forEach(function (methodName) {
         playerAPI[methodName] = function () {
             var callArguments = arguments;
 
