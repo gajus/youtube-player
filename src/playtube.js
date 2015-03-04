@@ -116,7 +116,7 @@ Playtube.promisifyPlayer = function (playerAPIReady) {
 
             return playerAPIReady
                 .then(function (player) {
-                    player[methodName].apply(player, callArguments);
+                    return player[methodName].apply(player, callArguments);
                 });
         };
     });
