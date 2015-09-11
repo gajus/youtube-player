@@ -1,6 +1,6 @@
 {
   "name": "playtube",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "YouTube iframe API abstraction.",
   "main": "./dist/es5/index.js",
   "author": {
