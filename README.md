@@ -2,6 +2,7 @@
 
 [![NPM version](http://img.shields.io/npm/v/playtube.svg?style=flat)](https://www.npmjs.com/package/playtube)
 [![Bower version](https://badge.fury.io/bo/playtube.svg)](http://bower.io/search/?q=playtube)
+[![NPM version](http://img.shields.io/npm/v/react-css-modules.svg?style=flat)](https://www.npmjs.org/package/react-css-modules)
 [![js-canonical-style](https://img.shields.io/badge/code%20style-canonical-brightgreen.svg?style=flat)](https://github.com/gajus/canonical)
 
 Playtube is an abstraction of [YouTube Player IFrame API](https://developers.google.com/youtube/iframe_api_reference) (YPIA).
@@ -84,3 +85,12 @@ When using Bower distribution (`./dist/playtube.min.js`) `playtube` is available
 </body>
 </html>
 ```
+
+## Running the Examples
+
+```sh
+npm install webpack-dev-server -g
+webpack-dev-server
+```
+
+This will start a HTTP server on port 8000.
