@@ -1,16 +1,1 @@
-{
-  "main": "dist/playtube.min.js",
-  "version": "1.0.5",
-  "name": "playtube",
-  "description": "YouTube iframe API abstraction.",
-  "keywords": [
-    "youtube",
-    "api",
-    "promise",
-    "video",
-    "player"
-  ],
-  "authors": [
-    "Gajus Kuizinas <gk@anuary.com>"
-  ]
-}
+{"main":"./dist/browser/playtube.js","name":"playtube","description":"YouTube iframe API abstraction.","keywords":["youtube","api","promise","video","player"],"authors":[{"name":"Gajus Kuizinas","email":"gk@anuary.com","url":"http://gajus.com"}]}

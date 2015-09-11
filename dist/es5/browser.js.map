@@ -1,0 +1,1 @@
+{"version":3,"sources":["browser.js"],"names":[],"mappings":";;;;gBAAqB,IAAI;;;;AAEzB,MAAM,CAAC,KAAK,GAAG,MAAM,CAAC,KAAK,IAAI,EAAE,CAAC;AAClC,MAAM,CAAC,KAAK,CAAC,QAAQ,gBAAW,CAAC","file":"browser.js","sourcesContent":["import playtube from './';\n\nglobal.gajus = global.gajus || {};\nglobal.gajus.playtube = playtube;\n"],"sourceRoot":"/source/"}

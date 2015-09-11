@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <script src="./../../dist/playtube.min.js"></script>
+    <script src="/playtube.js"></script>
 </head>
 <body>
     <div id="player-1"></div>
@@ -9,7 +9,19 @@
     <script>
     var playtube = gajus.playtube,
         player1,
-        firstStateChange;
+        stateNames;
+
+    /**
+     * @see https://developers.google.com/youtube/iframe_api_reference#Events
+     */
+    stateNames = {
+        '-1': 'unstarted',
+        0: 'ended',
+        1: 'playing',
+        2: 'paused',
+        3: 'buffering',
+        5: 'video cued'
+    };
 
     player1 = playtube.player('player-1', {
         videoId: 'M7lc1UVf-VE'
@@ -28,15 +40,11 @@
         });
 
     player1.on('stateChange', function (event) {
-        if (!firstStateChange) {
-            if (event.data !== 1) {
-                throw new Error('Unexpected state.');
-            }
-
-            console.log('Video started playing.');
-
-            firstStateChange = true;
+        if (!stateNames[event.data]) {
+            throw new Error('Unknown state (' + event.data + ').');
         }
+
+        console.log('State: ' + stateNames[event.data] + ' (' + event.data + ').');
     });
     </script>
 </body>

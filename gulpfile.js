@@ -1,72 +1,89 @@
-'use strict';
+import gulp from 'gulp';
+import jsonfile from 'jsonfile';
+import webpack from 'webpack';
+import del from 'del';
+import mocha from 'gulp-mocha';
+import babel from 'gulp-babel';
+import gutil from 'gulp-util';
+import sourcemaps from 'gulp-sourcemaps';
+import webpackConfig from './webpack.config';
+import glob from 'globby';
 
-var util = {},
-    gulp = require('gulp'),
-    eslint = require('gulp-eslint'),
-    watchify = require('watchify'),
-    browserify = require('browserify'),
-    babelify = require('babelify'),
-    sourcemaps = require('gulp-sourcemaps'),
-    header = require('gulp-header'),
-    uglify = require('gulp-uglify'),
-    source = require('vinyl-source-stream'),
-    buffer = require('vinyl-buffer'),
-    jsonfile = require('jsonfile');
+import {
+    lintFiles,
+    getPrinter
+} from 'canonical';
 
-util.bundler = browserify('./src/playtube.js', watchify.args);
-util.bundler.transform(babelify);
-util.bundler = watchify(util.bundler);
+gulp.task('lint', () => {
+    return glob(['./src/**/*.js', './test/**/*.js'])
+        .then((paths) => {
+            let printer,
+                report;
 
-util.bundleName = function () {
-    var pkg = jsonfile.readFileSync('./package.json');
+            printer = getPrinter();
+            report = lintFiles(paths);
 
-    return pkg.name + '.min.js';
-};
+            if (report.errorCount || report.warningCount) {
+                console.log(printer(report));
+            }
+        });
+});
 
-gulp.task('lint', function () {
+gulp.task('clean', ['lint'], () => {
+    return del([
+            './dist/es5/*',
+            './dist/browser/*'
+        ]);
+});
+
+gulp.task('build-browser', ['clean'], (done) => {
+    webpack(webpackConfig, (error, stats) => {
+        if (error) {
+            throw new gutil.PluginError('webpack', error);
+        }
+
+        // gutil.log('[webpack]', stats.toString());
+
+        done();
+    });
+});
+
+gulp.task('build-es5', ['clean'], () => {
     return gulp
-        .src(['./src/*.js','./tests/*.js'])
-        .pipe(eslint())
-        .pipe(eslint.format())
-        .pipe(eslint.failOnError());
-});
-
-gulp.task('bundle', ['lint'], function () {
-    return util.bundler
-        .bundle()
-        .on('error', function(err) {
-            console.log(err.message);
-        })
-        .pipe(source(util.bundleName()))
-        .pipe(buffer())
-        .pipe(sourcemaps.init({loadMaps: true}))
-        .pipe(uglify())
+        .src('./src/*')
+        .pipe(sourcemaps.init())
+        .pipe(babel())
         .pipe(sourcemaps.write('./'))
-        .pipe(gulp.dest('./dist/'));
+        .pipe(gulp.dest('./dist/es5'));
 });
 
-gulp.task('version', ['bundle'], function () {
-    var name = 'contents',
-        pkg = jsonfile.readFileSync('./package.json'),
-        bower = jsonfile.readFileSync('./bower.json');
+gulp.task('test', ['build-browser', 'build-es5'], (done) => {
+    return gulp
+        .src('./test/*', {
+            read: false
+        })
+        .pipe(mocha());
+});
 
-    gulp
-        .src('./dist/' + util.bundleName())
-        .pipe(header('/**\n * @version <%= version %>\n * @link https://github.com/gajus/' + name + ' for the canonical source repository\n * @license https://github.com/gajus/' + name + '/blob/master/LICENSE BSD 3-Clause\n */\n', {version: pkg.version}))
-        .pipe(gulp.dest('./dist/'));
+gulp.task('version', ['test'], () => {
+    let pkg = jsonfile.readFileSync('./package.json'),
+        bower = jsonfile.readFileSync('./bower.json');
 
     bower.name = pkg.name;
     bower.description = pkg.description;
-    bower.version = pkg.version;
     bower.keywords = pkg.keywords;
     bower.license = pkg.license;
-    bower.authors = [pkg.author];
+    bower.authors = [
+        pkg.author
+    ];
 
     jsonfile.writeFileSync('./bower.json', bower);
 });
 
-gulp.task('watch', function () {
+gulp.task('build', ['version']);
+
+gulp.task('default', ['build']);
+
+gulp.task('watch', () => {
     gulp.watch(['./src/**/*', './tests/**/*'], ['default']);
 });
-
-gulp.task('default', ['version']);
