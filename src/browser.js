@@ -1,4 +1,4 @@
-import playtube from './';
+import YouTubePlayer from './';
 
 global.gajus = global.gajus || {};
-global.gajus.playtube = playtube;
+global.gajus.YouTubePlayer = YouTubePlayer;

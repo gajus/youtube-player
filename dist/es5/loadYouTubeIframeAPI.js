@@ -21,6 +21,7 @@ exports['default'] = function () {
      * A promise that is resolved when window.onYouTubeIframeAPIReady is called.
      * The promise is resolved with a reference to global.YT object.
      *
+     * @param {Function} resolve
      * @member {Object} iframeAPIReady
      */
     iframeAPIReady = new _bluebird2['default'](function (resolve) {

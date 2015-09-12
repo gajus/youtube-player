@@ -6,7 +6,7 @@ module.exports = {
     devtool: 'source-map',
     context: __dirname + '/src',
     entry: {
-        playtube: './browser.js'
+        'youtube-player': './browser.js'
     },
     devServer: {
         contentBase: __dirname + '/examples/',

@@ -1,22 +1,22 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <script src="/playtube.js"></script>
+    <script src='/youtube-player.js'></script>
 </head>
 <body>
-    <div id="player-1"></div>
-    <div id="player-2"></div>
+    <div id='player-1'></div>
+    <div id='player-2'></div>
 
     <script>
-    var playtube = gajus.playtube,
+    var YouTubePlayer = gajus.YouTubePlayer,
         player1,
         player2;
 
-    player1 = playtube.player('player-1', {
+    player1 = YouTubePlayer('player-1', {
         videoId: 'M7lc1UVf-VE'
     });
 
-    player2 = playtube.player('player-2', {
+    player2 = YouTubePlayer('player-2', {
         videoId: 'SRo9RcE65lo'
     });
     </script>

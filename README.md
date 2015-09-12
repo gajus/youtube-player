@@ -1,1 +1,140 @@
-This package has been deprecated in favor of https://www.npmjs.com/package/youtube-player.
+# YouTube Player
+
+[![NPM version](http://img.shields.io/npm/v/youtube-player.svg?style=flat)](https://www.npmjs.com/package/youtube-player)
+[![Bower version](https://badge.fury.io/bo/youtube-player.svg)](http://bower.io/search/?q=youtube-player)
+[![js-canonical-style](https://img.shields.io/badge/code%20style-canonical-brightgreen.svg?style=flat)](https://github.com/gajus/canonical)
+
+* [Usage](#usage)
+    * [Events](#events)
+* [Examples](#examples)
+* [Download](#download)
+* [Browser Package](#browser-package)
+* [Running the Examples](#running-the-examples)
+* [Version 0](#version-0)
+
+`youtube-player` is an abstraction of [YouTube IFrame Player API](https://developers.google.com/youtube/iframe_api_reference) (YIPA).
+
+The downsides of using YouTube IFrame Player API are:
+
+* Requires to define callbacks in the global scope (`window`).
+* Requires to track the state of a player (e.g. you must ensure that video player is "ready" before you can use the API).
+
+`youtube-player`:
+
+* Registers listeners required to establish when YIPA has been loaded.
+* Does not overwrite global YIPA callback functions.
+* Queues player API calls until when video player is "ready".
+
+##
+
+## Usage
+
+```js
+/**
+ * @typedef options
+ * @see https://developers.google.com/youtube/iframe_api_reference#Loading_a_Video_Player
+ * @param {Number} width
+ * @param {Number} height
+ * @param {String} videoId
+ * @param {Object} playerVars
+ * @param {Object} events
+ */
+
+/**
+ * A factory function used to produce an instance of YT.Player and queue function calls and proxy events of the resulting object.
+ *
+ * @param {HTMLElement|String} elementId Either the DOM element or the id of the HTML element where the API will insert an <iframe>.
+ * @param {player~options} options
+ * @return {Object}
+ */
+import YouTubePlayer from 'youtube-player';
+```
+
+`youtube-player` is a factory function.
+
+ The resulting object exposes all [functions of an instance of `YT.Player`](https://developers.google.com/youtube/iframe_api_reference#Functions). The difference is that the function body is wrapped in a promise. This promise is resolved only when the player has finished loading and is ready to begin receiving API calls (`onReady`). Therefore, all function calls are queued and replayed only when player is ready.
+
+ This encapsulation does not affect the API other than making every function return a promise.
+
+```js
+let player;
+
+player = YouTubePlayer('video-player');
+
+// 'loadVideoById' is queued until the player is ready to receive API calls.
+player.loadVideoById('M7lc1UVf-VE');
+
+// 'playVideo' is queue until the player is ready to received API calls and after 'loadVideoById' has been called.
+player.playVideo();
+
+// 'stopVideo' is queued after 'playVideo'.
+player
+    .stopVideo()
+    .then(() => {
+        // Every function returns a promise that is resolved after the target function has been executed.
+    });
+```
+
+### Events
+
+`player.on` event emitter is used to listen to all [YouTube IFrame Player API events](https://developers.google.com/youtube/iframe_api_reference#Events), e.g.
+
+```
+player.on('stateChange', (event) => {
+    // event.data
+});
+ ```
+
+## Examples
+
+* [Playing a video](./examples/playing-video/index.html).
+* [Multiple players](./examples/multiple-players/index.html).
+* [Registering events handlers](./examples/registering-event-handlers/index.html).
+
+## Download
+
+Using [Bower](http://bower.io/):
+
+```sh
+bower install youtube-player
+```
+
+Using [NPM](https://www.npmjs.org/):
+
+```sh
+npm install youtube-player
+```
+
+## Browser Package
+
+When using the browser distribution (`./dist/browser/youtube-player.js`) `youtube-player` is available under `window.gajus.YouTubePlayer` namespace.
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+    <script src='./bower_components/youtube-player/dist/youtube-player.js'></script>
+</head>
+<body>
+    <div id='my-player'></div>
+    <script>
+    var YouTubePlayer = window.gajus.YouTubePlayer;
+
+    YouTubePlayer('my-player');
+    </script>
+</body>
+</html>
+```
+
+## Running the Examples
+
+```sh
+npm install webpack-dev-server -g
+webpack-dev-server
+```
+
+This will start a HTTP server on port 8000.
+
+## Version 0
+
+Version ~0 of the `youtube-player` has been developed by [Dominic Tarr](https://github.com/dominictarr). He kindly released the NPM namespace of `youtube-player` for this project. The original code can be found at https://github.com/dominictarr/youtube-player.

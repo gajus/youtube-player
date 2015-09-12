@@ -1,1 +1,1 @@
-{"main":"./dist/browser/playtube.js","name":"playtube","description":"YouTube iframe API abstraction.","keywords":["youtube","api","promise","video","player"],"authors":[{"name":"Gajus Kuizinas","email":"gk@anuary.com","url":"http://gajus.com"}]}
+{"main":"./dist/browser/playtube.js","name":"youtube-player","description":"YouTube IFrame Player API abstraction.","keywords":["youtube","iframe","player","api","promise","video"],"authors":[{"name":"Gajus Kuizinas","email":"gk@anuary.com","url":"http://gajus.com"}]}

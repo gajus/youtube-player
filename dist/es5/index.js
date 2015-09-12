@@ -34,72 +34,11 @@ var _loadYouTubeIframeAPI2 = _interopRequireDefault(_loadYouTubeIframeAPI);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
-var Playtube = undefined,
-    playtube = undefined,
+var YouTubePlayer = undefined,
     youtubeIframeAPI = undefined;
 
-Playtube = {};
-playtube = {};
+YouTubePlayer = {};
 youtubeIframeAPI = (0, _loadYouTubeIframeAPI2['default'])();
-
-/**
- * @typedef options
- * @see https://developers.google.com/youtube/iframe_api_reference#Loading_a_Video_Player
- * @param {Number} width
- * @param {Number} height
- * @param {String} videoId
- * @param {Object} playerVars
- * @param {Object} events
- */
-
-/**
- * @param {HTMLElement|String} elementId Either the DOM element or the id of the HTML element where the API will insert an <iframe>.
- * @param {player~options} options
- * @return {Object}
- */
-playtube.player = function (elementId) {
-    var options = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
-
-    var emitter = undefined,
-        playerAPI = undefined,
-        playerAPIReady = undefined;
-
-    playerAPI = {};
-    emitter = (0, _sister2['default'])();
-
-    if (options.events) {
-        throw new Error('Event handlers cannot be overwritten.');
-    }
-
-    if (typeof elementId === 'string' && !document.getElementById(elementId)) {
-        throw new Error('Element "#' + elementId + '" does not exist.');
-    }
-
-    options.events = Playtube.proxyEvents(emitter);
-
-    playerAPIReady = new _bluebird2['default'](function (resolve) {
-        youtubeIframeAPI.then(function (YT) {
-            return new YT.Player(elementId, options);
-        }).then(function (player) {
-            emitter.on('ready', function () {
-                resolve(player);
-
-                // Until Proxies become available, this is the only way to Promisify the SDK.
-                /*
-                methods = _.map(_.functions(player), function (name) {
-                    return '\'' + name + '\'';
-                });
-                 console.log(methods.join(', '));
-                */
-            });
-        });
-    });
-
-    playerAPI = Playtube.promisifyPlayer(playerAPIReady);
-    playerAPI.on = emitter.on;
-
-    return playerAPI;
-};
 
 /**
  * Construct an object that defines an event handler for all of the
@@ -110,7 +49,7 @@ playtube.player = function (elementId) {
  * @param {Sister} emitter
  * @return {Object}
  */
-Playtube.proxyEvents = function (emitter) {
+YouTubePlayer.proxyEvents = function (emitter) {
     var events = undefined;
 
     events = {};
@@ -135,7 +74,7 @@ Playtube.proxyEvents = function (emitter) {
  * @param {Promise} playerAPIReady Promise that resolves when player is ready.
  * @return {Object}
  */
-Playtube.promisifyPlayer = function (playerAPIReady) {
+YouTubePlayer.promisifyPlayer = function (playerAPIReady) {
     var functions = undefined;
 
     functions = {};
@@ -155,6 +94,67 @@ Playtube.promisifyPlayer = function (playerAPIReady) {
     return functions;
 };
 
-exports['default'] = playtube;
+/**
+ * @typedef options
+ * @see https://developers.google.com/youtube/iframe_api_reference#Loading_a_Video_Player
+ * @param {Number} width
+ * @param {Number} height
+ * @param {String} videoId
+ * @param {Object} playerVars
+ * @param {Object} events
+ */
+
+/**
+ * A factory function used to produce an instance of YT.Player and queue function calls and proxy events of the resulting object.
+ *
+ * @param {HTMLElement|String} elementId Either the DOM element or the id of the HTML element where the API will insert an <iframe>.
+ * @param {YouTubePlayer~options} options
+ * @return {Object}
+ */
+
+exports['default'] = function (elementId) {
+    var options = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
+
+    var emitter = undefined,
+        playerAPI = undefined,
+        playerAPIReady = undefined;
+
+    playerAPI = {};
+    emitter = (0, _sister2['default'])();
+
+    if (options.events) {
+        throw new Error('Event handlers cannot be overwritten.');
+    }
+
+    if (typeof elementId === 'string' && !document.getElementById(elementId)) {
+        throw new Error('Element "#' + elementId + '" does not exist.');
+    }
+
+    options.events = YouTubePlayer.proxyEvents(emitter);
+
+    playerAPIReady = new _bluebird2['default'](function (resolve) {
+        youtubeIframeAPI.then(function (YT) {
+            return new YT.Player(elementId, options);
+        }).then(function (player) {
+            emitter.on('ready', function () {
+                resolve(player);
+
+                // Until Proxies become available, this is the only way to Promisify the SDK.
+                /*
+                methods = _.map(_.functions(player), function (name) {
+                    return '\'' + name + '\'';
+                });
+                 console.log(methods.join(', '));
+                */
+            });
+        });
+    });
+
+    playerAPI = YouTubePlayer.promisifyPlayer(playerAPIReady);
+    playerAPI.on = emitter.on;
+
+    return playerAPI;
+};
+
 module.exports = exports['default'];
 //# sourceMappingURL=index.js.map
