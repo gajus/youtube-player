@@ -1,7 +1,6 @@
 # YouTube Player
 
-[![NPM version](http://img.shields.io/npm/v/youtube-player.svg?style=flat)](https://www.npmjs.com/package/youtube-player)
-[![Bower version](https://badge.fury.io/bo/youtube-player.svg)](http://bower.io/search/?q=youtube-player)
+[![NPM version](http://img.shields.io/npm/v/youtube-player.svg?style=flat-square)](https://www.npmjs.com/package/youtube-player)
 [![Canonical Code Style](https://img.shields.io/badge/code%20style-canonical-blue.svg?style=flat-square)](https://github.com/gajus/canonical)
 
 * [Usage](#usage)
