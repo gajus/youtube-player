@@ -1,15 +1,17 @@
-var webpack;
+var path,
+    webpack;
 
 webpack = require('webpack');
+path = require('path');
 
 module.exports = {
     devtool: 'source-map',
-    context: __dirname + '/src',
+    context: path.resolve(__dirname, './src'),
     entry: {
-        'youtube-player': './browser.js'
+        'youtube-player': './youtube-player.js'
     },
     devServer: {
-        contentBase: __dirname + '/examples/',
+        contentBase: path.resolve(__dirname, './src'),
         colors: true,
         quiet: false,
         noInfo: false,
@@ -20,37 +22,20 @@ module.exports = {
         hot: true
     },
     output: {
-        path: __dirname + '/dist/browser',
+        path: __dirname,
         filename: '[name].js',
         publicPath: '/'
     },
     plugins: [
-        new webpack.optimize.UglifyJsPlugin({
-            // minimize: true,
-            compress: {
-                warnings: false
-            }
-        }),
-        new webpack.OldWatchingPlugin(),
-        // new webpack.NewWatchingPlugin(),
-        new webpack.optimize.DedupePlugin(),
         new webpack.NoErrorsPlugin()
     ],
     module: {
         loaders: [
             {
                 test: /\.js$/,
-                exclude: [
-                    /node_modules/
-                ],
+                include: path.resolve(__dirname, './src'),
                 loader: 'babel'
             }
-        ]
-    },
-    resolve: {
-        extensions: [
-            '',
-            '.js'
         ]
     }
 };

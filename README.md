@@ -100,9 +100,11 @@ npm install youtube-player
 ## Running the Examples
 
 ```sh
+npm install
+npm run build
 cd ./examples
 npm install
-npm start
+npm run start
 ```
 
 This will start a HTTP server on port 8000.
