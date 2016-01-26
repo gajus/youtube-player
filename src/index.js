@@ -4,10 +4,6 @@ import Bluebird from 'bluebird';
 import loadYouTubeIframeAPI from './loadYouTubeIframeAPI';
 import YouTubePlayer from './YouTubePlayer';
 
-let youtubeIframeAPI;
-
-youtubeIframeAPI = loadYouTubeIframeAPI();
-
 /**
  * @typedef options
  * @see https://developers.google.com/youtube/iframe_api_reference#Loading_a_Video_Player
@@ -28,7 +24,10 @@ youtubeIframeAPI = loadYouTubeIframeAPI();
 export default (elementId, options = {}) => {
     let emitter,
         playerAPI,
-        playerAPIReady;
+        playerAPIReady,
+        youtubeIframeAPI;
+
+    youtubeIframeAPI = loadYouTubeIframeAPI();
 
     playerAPI = {};
     emitter = Sister();
