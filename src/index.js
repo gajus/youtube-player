@@ -56,6 +56,7 @@ export default (elementId, options = {}) => {
 
     playerAPI = YouTubePlayer.promisifyPlayer(playerAPIReady);
     playerAPI.on = emitter.on;
+    playerAPI.off = emitter.off;
 
     return playerAPI;
 };
