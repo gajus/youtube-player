@@ -2,15 +2,13 @@
 
 [![NPM version](http://img.shields.io/npm/v/youtube-player.svg?style=flat)](https://www.npmjs.com/package/youtube-player)
 [![Bower version](https://badge.fury.io/bo/youtube-player.svg)](http://bower.io/search/?q=youtube-player)
-[![js-canonical-style](https://img.shields.io/badge/code%20style-canonical-brightgreen.svg?style=flat)](https://github.com/gajus/canonical)
+[![Canonical Code Style](https://img.shields.io/badge/code%20style-canonical-blue.svg?style=flat-square)](https://github.com/gajus/canonical)
 
 * [Usage](#usage)
     * [Events](#events)
 * [Examples](#examples)
 * [Download](#download)
-* [Browser Package](#browser-package)
 * [Running the Examples](#running-the-examples)
-* [Version 0](#version-0)
 
 `youtube-player` is an abstraction of [YouTube IFrame Player API](https://developers.google.com/youtube/iframe_api_reference) (YIPA).
 
@@ -79,7 +77,7 @@ player
 
 `player.on` event emitter is used to listen to all [YouTube IFrame Player API events](https://developers.google.com/youtube/iframe_api_reference#Events), e.g.
 
-```
+```js
 player.on('stateChange', (event) => {
     // event.data
 });
@@ -93,48 +91,18 @@ player.on('stateChange', (event) => {
 
 ## Download
 
-Using [Bower](http://bower.io/):
-
-```sh
-bower install youtube-player
-```
-
 Using [NPM](https://www.npmjs.org/):
 
 ```sh
 npm install youtube-player
 ```
 
-## Browser Package
-
-When using the browser distribution (`./dist/browser/youtube-player.js`) `youtube-player` is available under `window.gajus.YouTubePlayer` namespace.
-
-```html
-<!DOCTYPE html>
-<html>
-<head>
-    <script src='./bower_components/youtube-player/dist/youtube-player.js'></script>
-</head>
-<body>
-    <div id='my-player'></div>
-    <script>
-    var YouTubePlayer = window.gajus.YouTubePlayer;
-
-    YouTubePlayer('my-player');
-    </script>
-</body>
-</html>
-```
-
 ## Running the Examples
 
 ```sh
-npm install webpack-dev-server -g
-webpack-dev-server
+cd ./examples
+npm install
+npm start
 ```
 
 This will start a HTTP server on port 8000.
-
-## Version 0
-
-Version ~0 of the `youtube-player` has been developed by [Dominic Tarr](https://github.com/dominictarr). He kindly released the NPM namespace of `youtube-player` for this project. The original code can be found at https://github.com/dominictarr/youtube-player.

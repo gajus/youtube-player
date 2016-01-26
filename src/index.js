@@ -1,66 +1,12 @@
+import _ from 'lodash';
 import Sister from 'sister';
 import Bluebird from 'bluebird';
-import functionNames from './functionNames';
-import eventNames from './eventNames';
 import loadYouTubeIframeAPI from './loadYouTubeIframeAPI';
-import _ from 'lodash';
+import YouTubePlayer from './YouTubePlayer';
 
-let YouTubePlayer,
-    youtubeIframeAPI;
+let youtubeIframeAPI;
 
-YouTubePlayer = {};
 youtubeIframeAPI = loadYouTubeIframeAPI();
-
-/**
- * Construct an object that defines an event handler for all of the
- * YouTube player events. Proxy captured events through an event emitter.
- *
- * @todo Capture event parameters.
- * @see https://developers.google.com/youtube/iframe_api_reference#Events
- * @param {Sister} emitter
- * @return {Object}
- */
-YouTubePlayer.proxyEvents = (emitter) => {
-    let events;
-
-    events = {};
-
-    _.forEach(eventNames, (eventName) => {
-        let onEventName;
-
-        onEventName = `on${_.capitalize(eventName)}`;
-
-        events[onEventName] = (event) => {
-            emitter.trigger(eventName, event);
-        };
-    });
-
-    return events;
-};
-
-/**
- * Delays player API method execution until player state is ready.
- *
- * @todo Proxy all of the methods using Object.keys.
- * @param {Promise} playerAPIReady Promise that resolves when player is ready.
- * @return {Object}
- */
-YouTubePlayer.promisifyPlayer = (playerAPIReady) => {
-    let functions;
-
-    functions = {};
-
-    _.forEach(functionNames, (functionName) => {
-        functions[functionName] = (...args) => {
-            return playerAPIReady
-                .then((player) => {
-                    return player[functionName](...args);
-                });
-        };
-    });
-
-    return functions;
-};
 
 /**
  * @typedef options
@@ -77,7 +23,7 @@ YouTubePlayer.promisifyPlayer = (playerAPIReady) => {
  *
  * @param {HTMLElement|String} elementId Either the DOM element or the id of the HTML element where the API will insert an <iframe>.
  * @param {YouTubePlayer~options} options
- * @return {Object}
+ * @returns {Object}
  */
 export default (elementId, options = {}) => {
     let emitter,
@@ -88,11 +34,11 @@ export default (elementId, options = {}) => {
     emitter = Sister();
 
     if (options.events) {
-        throw new Error(`Event handlers cannot be overwritten.`);
+        throw new Error('Event handlers cannot be overwritten.');
     }
 
-    if (typeof elementId === `string` && !document.getElementById(elementId)) {
-        throw new Error(`Element "#${elementId}" does not exist.`);
+    if (_.isString(elementId) && !document.getElementById(elementId)) {
+        throw new Error('Element "' + elementId + '" does not exist.');
     }
 
     options.events = YouTubePlayer.proxyEvents(emitter);
@@ -103,17 +49,8 @@ export default (elementId, options = {}) => {
                 return new YT.Player(elementId, options);
             })
             .then((player) => {
-                emitter.on(`ready`, () => {
+                emitter.on('ready', () => {
                     resolve(player);
-
-                    // Until Proxies become available, this is the only way to Promisify the SDK.
-                    /*
-                    methods = _.map(_.functions(player), function (name) {
-                        return '\'' + name + '\'';
-                    });
-
-                    console.log(methods.join(', '));
-                    */
                 });
             });
     });
