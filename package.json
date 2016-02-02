@@ -1,6 +1,6 @@
 {
   "name": "youtube-player",
-  "version": "3.0.1",
+  "version": "3.0.2",
   "license": "BSD-3-Clause",
   "description": "YouTube IFrame Player API abstraction.",
   "main": "./dist/index.js",
