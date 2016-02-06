@@ -14,6 +14,8 @@ import YouTubePlayer from './YouTubePlayer';
  * @param {Object} events
  */
 
+let youtubeIframeAPI;
+
 /**
  * A factory function used to produce an instance of YT.Player and queue function calls and proxy events of the resulting object.
  *
@@ -24,10 +26,11 @@ import YouTubePlayer from './YouTubePlayer';
 export default (elementId, options = {}) => {
     let emitter,
         playerAPI,
-        playerAPIReady,
-        youtubeIframeAPI;
+        playerAPIReady;
 
-    youtubeIframeAPI = loadYouTubeIframeAPI();
+    if (!youtubeIframeAPI) {
+        youtubeIframeAPI = loadYouTubeIframeAPI();
+    }
 
     playerAPI = {};
     emitter = Sister();
