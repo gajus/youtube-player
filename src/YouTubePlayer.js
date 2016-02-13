@@ -23,7 +23,7 @@ YouTubePlayer.proxyEvents = (emitter) => {
     _.forEach(eventNames, (eventName) => {
         let onEventName;
 
-        onEventName = 'on' + _.capitalize(eventName);
+        onEventName = 'on' + _.upperFirst(eventName);
 
         events[onEventName] = (event) => {
             emitter.trigger(eventName, event);
