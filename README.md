@@ -84,9 +84,9 @@ player.on('stateChange', (event) => {
 
 ## Examples
 
-* [Playing a video](./examples/playing-video/index.html).
-* [Multiple players](./examples/multiple-players/index.html).
-* [Registering events handlers](./examples/registering-event-handlers/index.html).
+* [Playing a video](./examples/src/playing-video/index.html).
+* [Multiple players](./examples/src/multiple-players/index.html).
+* [Registering events handlers](./examples/src/registering-event-handlers/index.html).
 
 ## Download
 
