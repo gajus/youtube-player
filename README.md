@@ -81,6 +81,13 @@ player.on('stateChange', (event) => {
     // event.data
 });
  ```
+ 
+`player.off` removes a previously added event listener, e.g.
+
+```js
+var listener = player.on(/* ... */);
+player.off(listener)
+```
 
 ## Examples
 
