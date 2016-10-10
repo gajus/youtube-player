@@ -1,6 +1,5 @@
 import _ from 'lodash';
 import Sister from 'sister';
-import Bluebird from 'bluebird';
 import loadYouTubeIframeAPI from './loadYouTubeIframeAPI';
 import YouTubePlayer from './YouTubePlayer';
 
@@ -45,7 +44,7 @@ export default (elementId, options = {}) => {
 
     options.events = YouTubePlayer.proxyEvents(emitter);
 
-    playerAPIReady = new Bluebird((resolve) => {
+    playerAPIReady = new Promise((resolve) => {
         youtubeIframeAPI
             .then((YT) => {
                 return new YT.Player(elementId, options);
