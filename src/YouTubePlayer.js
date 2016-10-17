@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import functionNames from './functionNames';
 import eventNames from './eventNames';
 
