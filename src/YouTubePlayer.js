@@ -2,9 +2,8 @@ import _ from 'lodash';
 import functionNames from './functionNames';
 import eventNames from './eventNames';
 
-String.prototype.upperFirst = function() {
-    return this.charAt(0).toUpperCase() + this.slice(1);
-}
+const upperFirst = (str) =>
+    str.charAt(0).toUpperCase() + str.slice(1);
 
 let YouTubePlayer;
 
@@ -27,7 +26,7 @@ YouTubePlayer.proxyEvents = (emitter) => {
     eventNames.forEach((eventName) => {
         let onEventName;
 
-        onEventName = 'on' + eventName.upperFirst();
+        onEventName = 'on' + upperFirst(eventName);
 
         events[onEventName] = (event) => {
             emitter.trigger(eventName, event);
