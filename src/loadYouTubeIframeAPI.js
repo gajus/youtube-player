@@ -1,4 +1,3 @@
-import Bluebird from 'bluebird';
 import load from 'load-script';
 
 export default () => {
@@ -11,7 +10,7 @@ export default () => {
      * @param {Function} resolve
      * @member {Object} iframeAPIReady
      */
-    iframeAPIReady = new Bluebird((resolve) => {
+    iframeAPIReady = new Promise((resolve) => {
         let previous;
 
         previous = window.onYouTubeIframeAPIReady;
