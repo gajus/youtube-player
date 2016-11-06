@@ -36,7 +36,6 @@
     "pragmatist": "^3.0.3"
   },
   "dependencies": {
-    "bluebird": "^3.3.0",
     "load-script": "^1.0.0",
     "lodash": "^4.3.0",
     "sister": "^3.0.0"
