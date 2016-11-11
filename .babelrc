@@ -5,6 +5,6 @@
     "add-module-exports"
   ],
   "presets": [
-    "es2015-node4"
+    "es2015"
   ]
 }
