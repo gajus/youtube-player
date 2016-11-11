@@ -2,9 +2,7 @@ import _ from 'lodash';
 import functionNames from './functionNames';
 import eventNames from './eventNames';
 
-let YouTubePlayer;
-
-YouTubePlayer = {};
+const YouTubePlayer = {};
 
 /**
  * Construct an object that defines an event handler for all of the YouTube
@@ -16,21 +14,17 @@ YouTubePlayer = {};
  * @returns {Object}
  */
 YouTubePlayer.proxyEvents = (emitter) => {
-    let events;
+  const events = {};
 
-    events = {};
+  _.forEach(eventNames, (eventName) => {
+    const onEventName = 'on' + _.upperFirst(eventName);
 
-    _.forEach(eventNames, (eventName) => {
-        let onEventName;
+    events[onEventName] = (event) => {
+      emitter.trigger(eventName, event);
+    };
+  });
 
-        onEventName = 'on' + _.upperFirst(eventName);
-
-        events[onEventName] = (event) => {
-            emitter.trigger(eventName, event);
-        };
-    });
-
-    return events;
+  return events;
 };
 
 /**
@@ -41,20 +35,18 @@ YouTubePlayer.proxyEvents = (emitter) => {
  * @returns {Object}
  */
 YouTubePlayer.promisifyPlayer = (playerAPIReady) => {
-    let functions;
+  const functions = {};
 
-    functions = {};
-
-    _.forEach(functionNames, (functionName) => {
-        functions[functionName] = (...args) => {
-            return playerAPIReady
+  _.forEach(functionNames, (functionName) => {
+    functions[functionName] = (...args) => {
+      return playerAPIReady
                 .then((player) => {
-                    return player[functionName](...args);
+                  return player[functionName](...args);
                 });
-        };
-    });
+    };
+  });
 
-    return functions;
+  return functions;
 };
 
 export default YouTubePlayer;

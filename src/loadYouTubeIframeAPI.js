@@ -1,32 +1,28 @@
 import load from 'load-script';
 
 export default () => {
-    let iframeAPIReady;
+  /**
+   * A promise that is resolved when window.onYouTubeIframeAPIReady is called.
+   * The promise is resolved with a reference to window.YT object.
+   *
+   * @param {Function} resolve
+   * @member {Object} iframeAPIReady
+   */
+  const iframeAPIReady = new Promise((resolve) => {
+    const previous = window.onYouTubeIframeAPIReady;
 
-    /**
-     * A promise that is resolved when window.onYouTubeIframeAPIReady is called.
-     * The promise is resolved with a reference to window.YT object.
-     *
-     * @param {Function} resolve
-     * @member {Object} iframeAPIReady
-     */
-    iframeAPIReady = new Promise((resolve) => {
-        let previous;
+    // The API will call this function when page has finished downloading
+    // the JavaScript for the player API.
+    window.onYouTubeIframeAPIReady = () => {
+      if (previous) {
+        previous();
+      }
 
-        previous = window.onYouTubeIframeAPIReady;
+      resolve(window.YT);
+    };
+  });
 
-        // The API will call this function when page has finished downloading
-        // the JavaScript for the player API.
-        window.onYouTubeIframeAPIReady = () => {
-            if (previous) {
-                previous();
-            }
+  load('//www.youtube.com/iframe_api');
 
-            resolve(window.YT);
-        };
-    });
-
-    load('//www.youtube.com/iframe_api');
-
-    return iframeAPIReady;
+  return iframeAPIReady;
 };

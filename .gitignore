@@ -1,9 +1,14 @@
-node_modules
 coverage
 dist
+node_modules
 *.log
 .*
+!.babelrc
+!.editorconfig
+!.eslintrc
+!.flowconfig
 !.gitignore
 !.npmignore
-!.babelrc
+!.README
+!.scripts
 !.travis.yml

@@ -12,7 +12,6 @@ import YouTubePlayer from './YouTubePlayer';
  * @param {Object} playerVars
  * @param {Object} events
  */
-
 let youtubeIframeAPI;
 
 /**
@@ -23,42 +22,44 @@ let youtubeIframeAPI;
  * @returns {Object}
  */
 export default (elementId, options = {}) => {
-    let emitter,
-        playerAPI,
-        playerAPIReady;
+  let playerAPI;
 
-    if (!youtubeIframeAPI) {
-        youtubeIframeAPI = loadYouTubeIframeAPI();
-    }
+  if (!youtubeIframeAPI) {
+    youtubeIframeAPI = loadYouTubeIframeAPI();
+  }
 
-    playerAPI = {};
-    emitter = Sister();
+  playerAPI = {};
 
-    if (options.events) {
-        throw new Error('Event handlers cannot be overwritten.');
-    }
+  const emitter = Sister();
 
-    if (_.isString(elementId) && !document.getElementById(elementId)) {
-        throw new Error('Element "' + elementId + '" does not exist.');
-    }
+  if (options.events) {
+    throw new Error('Event handlers cannot be overwritten.');
+  }
 
-    options.events = YouTubePlayer.proxyEvents(emitter);
+  if (_.isString(elementId) && !document.getElementById(elementId)) {
+    throw new Error('Element "' + elementId + '" does not exist.');
+  }
 
-    playerAPIReady = new Promise((resolve) => {
-        youtubeIframeAPI
-            .then((YT) => {
-                return new YT.Player(elementId, options);
-            })
-            .then((player) => {
-                emitter.on('ready', () => {
-                    resolve(player);
-                });
-            });
-    });
+  options.events = YouTubePlayer.proxyEvents(emitter);
 
-    playerAPI = YouTubePlayer.promisifyPlayer(playerAPIReady);
-    playerAPI.on = emitter.on;
-    playerAPI.off = emitter.off;
+  const playerAPIReady = new Promise((resolve) => {
+    // eslint-disable-next-line promise/catch-or-return
+    youtubeIframeAPI
+      .then((YT) => {
+        return new YT.Player(elementId, options);
+      })
 
-    return playerAPI;
+      // eslint-disable-next-line promise/always-return
+      .then((player) => {
+        emitter.on('ready', () => {
+          resolve(player);
+        });
+      });
+  });
+
+  playerAPI = YouTubePlayer.promisifyPlayer(playerAPIReady);
+  playerAPI.on = emitter.on;
+  playerAPI.off = emitter.off;
+
+  return playerAPI;
 };

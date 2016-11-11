@@ -1,0 +1,9 @@
+{
+  "plugins": [
+    "transform-object-rest-spread",
+    "transform-flow-comments"
+  ],
+  "presets": [
+    "es2015-node4"
+  ]
+}

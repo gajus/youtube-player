@@ -1,17 +1,32 @@
 {
-  "name": "youtube-player",
-  "version": "3.0.5",
-  "license": "BSD-3-Clause",
-  "description": "YouTube IFrame Player API abstraction.",
-  "main": "./dist/index.js",
   "author": {
-    "name": "Gajus Kuizinas",
     "email": "gajus@anuary.com",
+    "name": "Gajus Kuizinas",
     "url": "http://gajus.com"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/gajus/youtube-player"
+  "ava": {
+    "babel": "inherit",
+    "require": [
+      "babel-register"
+    ]
+  },
+  "dependencies": {
+    "load-script": "^1.0.0",
+    "lodash": "^4.3.0",
+    "sister": "^3.0.0"
+  },
+  "description": "YouTube IFrame Player API abstraction.",
+  "devDependencies": {
+    "ava": "^0.16.0",
+    "babel-cli": "^6.18.0",
+    "babel-plugin-transform-flow-comments": "^6.17.0",
+    "babel-plugin-transform-object-rest-spread": "^6.16.0",
+    "babel-preset-es2015-node4": "^2.1.0",
+    "babel-register": "^6.18.0",
+    "chai": "^3.5.0",
+    "eslint": "^3.9.1",
+    "eslint-config-canonical": "^5.4.0",
+    "husky": "^0.11.9"
   },
   "keywords": [
     "youtube",
@@ -21,23 +36,18 @@
     "promise",
     "video"
   ],
+  "license": "BSD-3-Clause",
+  "main": "./dist/index.js",
+  "name": "youtube-player",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gajus/youtube-player"
+  },
   "scripts": {
-    "pragmatist": "pragmatist --es5",
-    "lint": "npm run pragmatist lint",
-    "test": "npm run pragmatist test",
-    "build": "npm run pragmatist build",
-    "watch": "npm run pragmatist watch",
-    "watch-lint": "npm run pragmatist watch-lint",
-    "watch-test": "npm run pragmatist watch-test",
-    "watch-build": "npm run pragmatist watch-build"
+    "build": "NODE_ENV=production babel ./src --out-dir ./dist --copy-files",
+    "lint": "eslint ./src ./test",
+    "precommit": "npm run lint && npm run test",
+    "test": "NODE_ENV=development ava --verbose && npm run lint && npm run build"
   },
-  "devDependencies": {
-    "chai": "^3.5.0",
-    "pragmatist": "^3.0.3"
-  },
-  "dependencies": {
-    "load-script": "^1.0.0",
-    "lodash": "^4.3.0",
-    "sister": "^3.0.0"
-  }
+  "version": "3.0.5"
 }
