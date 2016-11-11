@@ -26,7 +26,7 @@ export default () => {
         };
     });
 
-    load('https://www.youtube.com/iframe_api');
+    load('//www.youtube.com/iframe_api');
 
     return iframeAPIReady;
 };
