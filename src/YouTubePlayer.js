@@ -38,11 +38,10 @@ YouTubePlayer.promisifyPlayer = (playerAPIReady) => {
   const functions = {};
 
   _.forEach(functionNames, (functionName) => {
-    functions[functionName] = (...args) => {
-      return playerAPIReady
-                .then((player) => {
-                  return player[functionName](...args);
-                });
+    functions[functionName] = async(...args) => {
+      const player = await playerAPIReady;
+
+      return player[functionName](...args);
     };
   });
 
