@@ -22,15 +22,11 @@ let youtubeIframeAPI;
  * @returns {Object}
  */
 export default (elementId, options = {}) => {
-  let playerAPI;
+  const emitter = Sister();
 
   if (!youtubeIframeAPI) {
     youtubeIframeAPI = loadYouTubeIframeAPI();
   }
-
-  playerAPI = {};
-
-  const emitter = Sister();
 
   if (options.events) {
     throw new Error('Event handlers cannot be overwritten.');
@@ -42,22 +38,17 @@ export default (elementId, options = {}) => {
 
   options.events = YouTubePlayer.proxyEvents(emitter);
 
-  const playerAPIReady = new Promise((resolve) => {
-    // eslint-disable-next-line promise/catch-or-return
-    youtubeIframeAPI
-      .then((YT) => {
-        return new YT.Player(elementId, options);
-      })
+  const playerAPIReady = new Promise(async(resolve) => {
+    const YT = await youtubeIframeAPI;
+    const player = new YT.Player(elementId, options);
 
-      // eslint-disable-next-line promise/always-return
-      .then((player) => {
-        emitter.on('ready', () => {
-          resolve(player);
-        });
-      });
+    emitter.on('ready', () => {
+      resolve(player);
+    });
   });
 
-  playerAPI = YouTubePlayer.promisifyPlayer(playerAPIReady);
+  const playerAPI = YouTubePlayer.promisifyPlayer(playerAPIReady);
+
   playerAPI.on = emitter.on;
   playerAPI.off = emitter.off;
 
