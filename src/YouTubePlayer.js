@@ -31,6 +31,7 @@ YouTubePlayer.proxyEvents = (emitter) => {
  * Delays player API method execution until player state is ready.
  *
  * @todo Proxy all of the methods using Object.keys.
+ * @todo See TRICKY below.
  * @param {Promise} playerAPIReady Promise that resolves when player is ready.
  * @returns {Object}
  */
@@ -41,7 +42,9 @@ YouTubePlayer.promisifyPlayer = (playerAPIReady) => {
     functions[functionName] = async(...args) => {
       const player = await playerAPIReady;
 
-      return player[functionName](...args);
+      // TRICKY: Just spread the args into the function once Babel is fixed:
+      // https://github.com/babel/babel/issues/4270
+      return player[functionName].apply(null, args);
     };
   });
 
