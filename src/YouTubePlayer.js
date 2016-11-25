@@ -1,5 +1,5 @@
 import forEach from 'lodash/forEach';
-import upperFirst from 'lodash/forEach';
+import upperFirst from 'lodash/upperFirst';
 import functionNames from './functionNames';
 import eventNames from './eventNames';
 
