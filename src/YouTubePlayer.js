@@ -39,7 +39,7 @@ YouTubePlayer.promisifyPlayer = (playerAPIReady) => {
   const functions = {};
 
   _.forEach(functionNames, (functionName) => {
-    functions[functionName] = async(...args) => {
+    functions[functionName] = async (...args) => {
       const player = await playerAPIReady;
 
       // TRICKY: Just spread the args into the function once Babel is fixed:

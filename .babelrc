@@ -6,8 +6,15 @@
     "add-module-exports"
   ],
   "presets": [
-    "es2015",
-    "es2016",
-    "es2017"
+    [
+      "env",
+      {
+        "targets": {
+          "browsers": [
+            "last 2 versions"
+          ]
+        }
+      }
+    ]
   ]
 }
