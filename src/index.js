@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import Sister from 'sister';
-import loadYouTubeIframeAPI from './loadYouTubeIframeAPI';
+import loadYouTubeIframeApi from './loadYouTubeIframeApi';
 import YouTubePlayer from './YouTubePlayer';
 
 /**
@@ -25,7 +25,7 @@ export default (elementId, options = {}) => {
   const emitter = Sister();
 
   if (!youtubeIframeAPI) {
-    youtubeIframeAPI = loadYouTubeIframeAPI();
+    youtubeIframeAPI = loadYouTubeIframeApi();
   }
 
   if (options.events) {

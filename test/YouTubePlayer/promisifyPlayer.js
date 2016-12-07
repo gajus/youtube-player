@@ -6,7 +6,7 @@ test('is a function', (t) => {
   t.true(YouTubePlayer.promisifyPlayer instanceof Function);
 });
 
-test('converts all API methods to asynchronous functions', async(t) => {
+test('converts all API methods to asynchronous functions', async (t) => {
   const mockPlayer = {};
   const mockArg = {};
   const playerAPIReady = new Promise((resolve) => {
@@ -23,6 +23,7 @@ test('converts all API methods to asynchronous functions', async(t) => {
 
     t.true(promise instanceof Promise);
 
+    // eslint-disable-next-line babel/no-await-in-loop
     const result = await promise;
 
     t.true(result === mockArg);
