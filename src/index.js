@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import Sister from 'sister';
-import loadYouTubeIframeAPI from './loadYouTubeIframeAPI';
+import loadYouTubeIframeAPI from './loadYouTubeIframeApi';
 import YouTubePlayer from './YouTubePlayer';
 
 /**
