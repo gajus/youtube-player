@@ -27,7 +27,8 @@
     "chai": "^3.5.0",
     "eslint": "^3.9.1",
     "eslint-config-canonical": "^5.4.0",
-    "husky": "^0.11.9"
+    "husky": "^0.11.9",
+    "semantic-release": "^6.3.2"
   },
   "keywords": [
     "youtube",
