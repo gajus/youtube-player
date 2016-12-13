@@ -7,8 +7,9 @@ node_js:
 before_install:
   - npm config set depth 0
   - npm install --global npm@4
-script:
-  - npm run test
+after_success:
+  - npm run build
+  - semantic-release pre && npm publish && semantic-release post
 notifications:
   email: false
 sudo: false

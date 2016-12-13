@@ -38,7 +38,7 @@ export default (elementId, options = {}) => {
 
   options.events = YouTubePlayer.proxyEvents(emitter);
 
-  const playerAPIReady = new Promise(async(resolve) => {
+  const playerAPIReady = new Promise(async (resolve) => {
     const YT = await youtubeIframeAPI;
     const player = new YT.Player(elementId, options);
 
