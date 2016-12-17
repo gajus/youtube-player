@@ -1,4 +1,4 @@
-import _ from 'lodash';
+import isString from 'lodash/isString';
 import Sister from 'sister';
 import loadYouTubeIframeAPI from './loadYouTubeIframeApi';
 import YouTubePlayer from './YouTubePlayer';
@@ -36,7 +36,7 @@ export default (elementId, options = {}) => {
     throw new Error('Event handlers cannot be overwritten.');
   }
 
-  if (_.isString(elementId) && !document.getElementById(elementId)) {
+  if (isString(elementId) && !document.getElementById(elementId)) {
     throw new Error('Element "' + elementId + '" does not exist.');
   }
 
