@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import functionNames from './functionNames';
 import eventNames from './eventNames';
 
@@ -20,15 +19,14 @@ YouTubePlayer.proxyEvents = (emitter) => {
 
     events = {};
 
-    _.forEach(eventNames, (eventName) => {
-        let onEventName;
-
-        onEventName = 'on' + _.upperFirst(eventName);
-
+    let eventName, onEventName;
+    for (let i = eventNames.length; i--;) {
+        eventName = eventNames[i];
+        onEventName = 'on' + eventName.charAt(0).toUpperCase() + eventName.slice(1);
         events[onEventName] = (event) => {
             emitter.trigger(eventName, event);
         };
-    });
+    }
 
     return events;
 };
@@ -45,14 +43,16 @@ YouTubePlayer.promisifyPlayer = (playerAPIReady) => {
 
     functions = {};
 
-    _.forEach(functionNames, (functionName) => {
+    let functionName;
+    for (let i = functionNames.length; i--;) {
+        functionName = functionNames[i];
         functions[functionName] = (...args) => {
             return playerAPIReady
                 .then((player) => {
                     return player[functionName](...args);
                 });
         };
-    });
+    }
 
     return functions;
 };
