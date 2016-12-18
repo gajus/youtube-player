@@ -3,9 +3,19 @@
     "lodash",
     "transform-object-rest-spread",
     "transform-flow-comments",
+    "transform-runtime",
     "add-module-exports"
   ],
   "presets": [
-    "es2015"
+    [
+      "env",
+      {
+        "targets": {
+          "browsers": [
+            "last 2 versions"
+          ]
+        }
+      }
+    ]
   ]
 }
