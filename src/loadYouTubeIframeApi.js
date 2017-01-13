@@ -9,6 +9,12 @@ export default () => {
    * @member {Object} iframeAPIReady
    */
   const iframeAPIReady = new Promise((resolve) => {
+    if (window.YT) {
+      resolve(window.YT);
+
+      return;
+    }
+
     const previous = window.onYouTubeIframeAPIReady;
 
     // The API will call this function when page has finished downloading
