@@ -9,7 +9,7 @@ export default () => {
    * @member {Object} iframeAPIReady
    */
   const iframeAPIReady = new Promise((resolve) => {
-    if (window.YT && window.YT.Player && typeof window.YT.Player === 'function') {
+    if (window.YT && window.YT.Player && window.YT.Player instanceof Function) {
       resolve(window.YT);
 
       return;
