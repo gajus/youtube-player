@@ -44,7 +44,9 @@ YouTubePlayer.promisifyPlayer = (playerAPIReady) => {
 
       // TRICKY: Just spread the args into the function once Babel is fixed:
       // https://github.com/babel/babel/issues/4270
-      return player[functionName].apply(null, args);
+      //
+      // eslint-disable-next-line prefer-spread
+      return player[functionName].apply(player, args);
     };
   });
 
