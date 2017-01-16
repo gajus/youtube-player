@@ -15,8 +15,9 @@ test('converts all API methods to asynchronous functions', async (t) => {
   const functions = YouTubePlayer.promisifyPlayer(playerAPIReady);
 
   for (const fname of functionNames) {
-    mockPlayer[fname] = (arg) => {
-      return arg;
+    // use function expression instead of arrow function expression to bind its own this
+    mockPlayer[fname] = function (arg) {
+      return [this, arg];
     };
 
     const promise = functions[fname](mockArg);
@@ -26,6 +27,7 @@ test('converts all API methods to asynchronous functions', async (t) => {
     // eslint-disable-next-line babel/no-await-in-loop
     const result = await promise;
 
-    t.true(result === mockArg);
+    t.true(result[0] === mockPlayer);
+    t.true(result[1] === mockArg);
   }
 });
