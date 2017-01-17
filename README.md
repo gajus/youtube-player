@@ -40,9 +40,9 @@ The downsides of using YouTube IFrame Player API are:
 /**
  * A factory function used to produce an instance of YT.Player and queue function calls and proxy events of the resulting object.
  *
- * @param {HTMLElement|String} elementId Either the DOM element or the id of the HTML element where the API will insert an <iframe>.
- * @param {player~options} options
- * @return {Object}
+ * @param {HTMLElement|String} elementId Either An existing YT.Player instance, the DOM element or the id of the HTML element where the API will insert an <iframe>.
+ * @param {YouTubePlayer~options} options (Ignored when using an existing YT.Player instance.)
+ * @returns {Object}
  */
 import YouTubePlayer from 'youtube-player';
 ```
