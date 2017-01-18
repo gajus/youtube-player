@@ -19,9 +19,12 @@ let youtubeIframeAPI;
  *
  * @param {HTMLElement|String} elementId Either the DOM element or the id of the HTML element where the API will insert an <iframe>.
  * @param {YouTubePlayer~options} options
+ * @param {boolean} strictState A flag designating whether or not to wait for
+ * an acceptable state when calling supported functions. Default: `false`.
+ * See `FunctionStateMap.js` for supported functions and acceptable states.
  * @returns {Object}
  */
-export default (elementId, options = {}) => {
+export default (elementId, options = {}, strictState = false) => {
   const emitter = Sister();
 
   if (!youtubeIframeAPI) {
@@ -47,7 +50,7 @@ export default (elementId, options = {}) => {
     });
   });
 
-  const playerAPI = YouTubePlayer.promisifyPlayer(playerAPIReady);
+  const playerAPI = YouTubePlayer.promisifyPlayer(playerAPIReady, strictState);
 
   playerAPI.on = emitter.on;
   playerAPI.off = emitter.off;
