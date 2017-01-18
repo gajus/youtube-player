@@ -46,12 +46,12 @@ YouTubePlayer.promisifyPlayer = (playerAPIReady, strictState = false) => {
       functions[functionName] = async (...args) => {
         const acceptStates = FunctionStateMap[functionName];
         const player = await playerAPIReady;
-        const playerState = await player.getPlayerState();
+        const playerState = player.getPlayerState();
 
         if (acceptStates.indexOf(playerState) === -1) {
           await new Promise((resolve) => {
             const onPlayerStateChange = async () => {
-              const playerStateAfterChange = await player.getPlayerState();
+              const playerStateAfterChange = player.getPlayerState();
 
               if (acceptStates.indexOf(playerStateAfterChange) !== -1) {
                 player.removeEventListener('onStateChange', onPlayerStateChange);
