@@ -1,11 +1,20 @@
 export default {
 
   // Accept Ended or Paused.
-  pauseVideo: [0, 2],
+  pauseVideo: {
+    acceptableStates: [0, 2],
+    stateChangeRequired: false
+  },
 
   // Accept Ended or Playing.
-  playVideo: [0, 1],
+  playVideo: {
+    acceptableStates: [0, 1],
+    stateChangeRequired: false
+  },
 
   // Accept Ended, Playing or Paused.
-  seekTo: [0, 1, 2]
+  seekTo: {
+    acceptableStates: [0, 1, 2],
+    stateChangeRequired: true
+  }
 };

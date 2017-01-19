@@ -42,18 +42,38 @@ YouTubePlayer.promisifyPlayer = (playerAPIReady, strictState = false) => {
   const functions = {};
 
   _.forEach(functionNames, (functionName) => {
-    if (strictState && FunctionStateMap[functionName] instanceof Array) {
+    if (strictState && FunctionStateMap[functionName] instanceof Object) {
       functions[functionName] = async (...args) => {
-        const acceptStates = FunctionStateMap[functionName];
+        const stateInfo = FunctionStateMap[functionName];
         const player = await playerAPIReady;
         const playerState = player.getPlayerState();
 
-        if (acceptStates.indexOf(playerState) === -1) {
+        // TRICKY: Just spread the args into the function once Babel is fixed:
+        // https://github.com/babel/babel/issues/4270
+        //
+        // eslint-disable-next-line prefer-spread
+        const value = player[functionName].apply(player, args);
+
+        // TRICKY: For functions like `seekTo`, a change in state must be
+        // triggered given that the resulting state could match the initial
+        // state.
+        if (
+          stateInfo.stateChangeRequired ||
+
+          // eslint-disable-next-line no-extra-parens
+          (
+            stateInfo.acceptableStates instanceof Array &&
+            stateInfo.acceptableStates.indexOf(playerState) === -1
+          )
+        ) {
           await new Promise((resolve) => {
             const onPlayerStateChange = () => {
               const playerStateAfterChange = player.getPlayerState();
 
-              if (acceptStates.indexOf(playerStateAfterChange) !== -1) {
+              if (
+                stateInfo.acceptableStates instanceof Array &&
+                stateInfo.acceptableStates.indexOf(playerStateAfterChange) !== -1
+              ) {
                 player.removeEventListener('onStateChange', onPlayerStateChange);
 
                 resolve();
@@ -64,11 +84,7 @@ YouTubePlayer.promisifyPlayer = (playerAPIReady, strictState = false) => {
           });
         }
 
-        // TRICKY: Just spread the args into the function once Babel is fixed:
-        // https://github.com/babel/babel/issues/4270
-        //
-        // eslint-disable-next-line prefer-spread
-        return player[functionName].apply(player, args);
+        return value;
       };
     } else {
       functions[functionName] = async (...args) => {
