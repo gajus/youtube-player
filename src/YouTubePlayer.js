@@ -70,12 +70,23 @@ YouTubePlayer.promisifyPlayer = (playerAPIReady, strictState = false) => {
             const onPlayerStateChange = () => {
               const playerStateAfterChange = player.getPlayerState();
 
+              let timeout;
+
+              if (typeof stateInfo.timeout === 'number') {
+                timeout = setTimeout(() => {
+                  player.removeEventListener('onStateChange', onPlayerStateChange);
+
+                  resolve();
+                }, stateInfo.timeout);
+              }
+
               if (
                 stateInfo.acceptableStates instanceof Array &&
                 stateInfo.acceptableStates.indexOf(playerStateAfterChange) !== -1
               ) {
                 player.removeEventListener('onStateChange', onPlayerStateChange);
 
+                clearTimeout(timeout);
                 resolve();
               }
             };
