@@ -48,6 +48,7 @@ YouTubePlayer.promisifyPlayer = (playerAPIReady, strictState = false) => {
         const player = await playerAPIReady;
         const playerState = player.getPlayerState();
 
+        // eslint-disable-next-line no-warning-comments
         // TODO: Just spread the args into the function once Babel is fixed:
         // https://github.com/babel/babel/issues/4270
         //
@@ -101,6 +102,7 @@ YouTubePlayer.promisifyPlayer = (playerAPIReady, strictState = false) => {
       functions[functionName] = async (...args) => {
         const player = await playerAPIReady;
 
+        // eslint-disable-next-line no-warning-comments
         // TODO: Just spread the args into the function once Babel is fixed:
         // https://github.com/babel/babel/issues/4270
         //
