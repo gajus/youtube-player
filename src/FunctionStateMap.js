@@ -1,20 +1,26 @@
+import PlayerStates from './constants/PlayerStates';
+
 export default {
-
-  // Accept Ended or Paused.
   pauseVideo: {
-    acceptableStates: [0, 2],
+    acceptableStates: [
+      PlayerStates.ENDED,
+      PlayerStates.PAUSED
+    ],
     stateChangeRequired: false
   },
-
-  // Accept Ended or Playing.
   playVideo: {
-    acceptableStates: [0, 1],
+    acceptableStates: [
+      PlayerStates.ENDED,
+      PlayerStates.PLAYING
+    ],
     stateChangeRequired: false
   },
-
-  // Accept Ended, Playing or Paused.
   seekTo: {
-    acceptableStates: [0, 1, 2],
+    acceptableStates: [
+      PlayerStates.ENDED,
+      PlayerStates.PLAYING,
+      PlayerStates.PAUSED
+    ],
     stateChangeRequired: true,
 
     // TRICKY: `seekTo` may not cause a state change if no buffering is
