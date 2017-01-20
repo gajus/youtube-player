@@ -48,7 +48,7 @@ YouTubePlayer.promisifyPlayer = (playerAPIReady, strictState = false) => {
         const player = await playerAPIReady;
         const playerState = player.getPlayerState();
 
-        // TRICKY: Just spread the args into the function once Babel is fixed:
+        // TODO: Just spread the args into the function once Babel is fixed:
         // https://github.com/babel/babel/issues/4270
         //
         // eslint-disable-next-line prefer-spread
@@ -101,7 +101,7 @@ YouTubePlayer.promisifyPlayer = (playerAPIReady, strictState = false) => {
       functions[functionName] = async (...args) => {
         const player = await playerAPIReady;
 
-        // TRICKY: Just spread the args into the function once Babel is fixed:
+        // TODO: Just spread the args into the function once Babel is fixed:
         // https://github.com/babel/babel/issues/4270
         //
         // eslint-disable-next-line prefer-spread
