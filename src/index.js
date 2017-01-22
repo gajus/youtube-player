@@ -56,15 +56,17 @@ export default (elementId, options = {}, strictState = false) => {
       elementId.playVideo instanceof Function
     ) {
       player = elementId;
+
+      resolve(player);
     } else {
       const YT = await youtubeIframeAPI;
 
       player = new YT.Player(elementId, options);
-    }
 
-    emitter.on('ready', () => {
-      resolve(player);
-    });
+      emitter.on('ready', () => {
+        resolve(player);
+      });
+    }
   });
 
   const playerAPI = YouTubePlayer.promisifyPlayer(playerAPIReady, strictState);
