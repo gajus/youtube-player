@@ -1,6 +1,7 @@
+import _ from 'lodash';
 import load from 'load-script';
 
-export default () => {
+export default (protocol) => {
   /**
    * A promise that is resolved when window.onYouTubeIframeAPIReady is called.
    * The promise is resolved with a reference to window.YT object.
@@ -27,9 +28,15 @@ export default () => {
       resolve(window.YT);
     };
   });
-  const protocol = window.location.protocol === 'http:' ? 'http:' : 'https:';
 
-  load(protocol + '//www.youtube.com/iframe_api');
+  const iframeLoadProtocol = _.cond([
+    [_.constant(protocol === 'http'), _.constant('http:')],
+    [_.constant(protocol === 'https'), _.constant('https:')],
+    [_.constant(window.location.protocol === 'http:'), _.constant('http:')],
+    [_.constant(true), _.constant('https:')]
+  ])();
+
+  load(iframeLoadProtocol + '//www.youtube.com/iframe_api');
 
   return iframeAPIReady;
 };
