@@ -27,9 +27,8 @@ export default () => {
       resolve(window.YT);
     };
   });
-  const protocol = window.location.protocol === 'http:' ? 'http:' : 'https:';
 
-  load(protocol + '//www.youtube.com/iframe_api');
+  load('https://www.youtube.com/iframe_api');
 
   return iframeAPIReady;
 };
