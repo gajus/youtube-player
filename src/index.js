@@ -29,13 +29,15 @@ let youtubeIframeAPI;
  * @param {boolean} strictState A flag designating whether or not to wait for
  * an acceptable state when calling supported functions. Default: `false`.
  * See `FunctionStateMap.js` for supported functions and acceptable states.
+ * @param {string} protocol Forces iframe to load via `https` or `http`.
+ * Acceptable values are {`https`|`http`}. Default: based on `window.location.protocol`.
  * @returns {Object}
  */
-export default (elementId, options = {}, strictState = false) => {
+export default (elementId, options = {}, strictState = false, protocol = null) => {
   const emitter = Sister();
 
   if (!youtubeIframeAPI) {
-    youtubeIframeAPI = loadYouTubeIframeApi();
+    youtubeIframeAPI = loadYouTubeIframeApi(protocol);
   }
 
   if (options.events) {
