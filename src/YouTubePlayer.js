@@ -63,7 +63,7 @@ YouTubePlayer.promisifyPlayer = (playerAPIReady, strictState = false) => {
 
           // eslint-disable-next-line no-extra-parens
           (
-            stateInfo.acceptableStates instanceof Array &&
+            Array.isArray(stateInfo.acceptableStates) &&
             stateInfo.acceptableStates.indexOf(playerState) === -1
           )
         ) {
@@ -82,7 +82,7 @@ YouTubePlayer.promisifyPlayer = (playerAPIReady, strictState = false) => {
               }
 
               if (
-                stateInfo.acceptableStates instanceof Array &&
+                Array.isArray(stateInfo.acceptableStates) &&
                 stateInfo.acceptableStates.indexOf(playerStateAfterChange) !== -1
               ) {
                 player.removeEventListener('onStateChange', onPlayerStateChange);

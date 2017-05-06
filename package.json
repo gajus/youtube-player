@@ -11,27 +11,27 @@
     ]
   },
   "dependencies": {
-    "babel-runtime": "^6.22.0",
+    "babel-runtime": "^6.23.0",
     "load-script": "^1.0.0",
-    "lodash": "^4.3.0",
+    "lodash": "^4.17.4",
     "sister": "^3.0.0"
   },
   "description": "YouTube IFrame Player API abstraction.",
   "devDependencies": {
-    "ava": "^0.16.0",
-    "babel-cli": "^6.18.0",
+    "ava": "^0.19.1",
+    "babel-cli": "^6.24.1",
     "babel-plugin-add-module-exports": "^0.2.1",
     "babel-plugin-lodash": "^3.2.11",
-    "babel-plugin-transform-flow-comments": "^6.17.0",
-    "babel-plugin-transform-object-rest-spread": "^6.16.0",
-    "babel-plugin-transform-runtime": "^6.15.0",
-    "babel-preset-env": "0.0.9",
-    "babel-register": "^6.18.0",
+    "babel-plugin-transform-flow-comments": "^6.22.0",
+    "babel-plugin-transform-object-rest-spread": "^6.23.0",
+    "babel-plugin-transform-runtime": "^6.23.0",
+    "babel-preset-env": "1.4.0",
+    "babel-register": "^6.24.1",
     "chai": "^3.5.0",
-    "eslint": "^3.10.2",
-    "eslint-config-canonical": "^5.5.0",
-    "husky": "^0.11.9",
-    "npm-watch": "^0.1.6",
+    "eslint": "^3.19.0",
+    "eslint-config-canonical": "^8.2.0",
+    "husky": "^0.13.3",
+    "npm-watch": "^0.1.9",
     "semantic-release": "^6.3.2"
   },
   "keywords": [
@@ -58,7 +58,7 @@
     "lint": "eslint ./src ./test",
     "watch": "npm-watch",
     "precommit": "npm run lint && npm run test",
-    "test": "NODE_ENV=development ava --verbose && npm run lint && npm run build"
+    "test": "NODE_ENV=development ava --verbose"
   },
   "version": "4.0.1"
 }
