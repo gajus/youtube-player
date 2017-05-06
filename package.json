@@ -22,7 +22,7 @@
     "babel-cli": "^6.24.1",
     "babel-plugin-add-module-exports": "^0.2.1",
     "babel-plugin-lodash": "^3.2.11",
-    "babel-plugin-transform-flow-comments": "^6.22.0",
+    "babel-plugin-transform-flow-strip-types": "^6.22.0",
     "babel-plugin-transform-object-rest-spread": "^6.23.0",
     "babel-plugin-transform-runtime": "^6.23.0",
     "babel-preset-env": "1.4.0",
@@ -30,6 +30,8 @@
     "chai": "^3.5.0",
     "eslint": "^3.19.0",
     "eslint-config-canonical": "^8.2.0",
+    "flow-bin": "^0.45.0",
+    "flow-copy-source": "^1.1.0",
     "husky": "^0.13.3",
     "npm-watch": "^0.1.9",
     "semantic-release": "^6.3.2"
@@ -54,7 +56,7 @@
     "test": "{src,test}/*.js"
   },
   "scripts": {
-    "build": "NODE_ENV=production babel ./src --out-dir ./dist --copy-files",
+    "build": "NODE_ENV=production babel ./src --out-dir ./dist --copy-files && flow-copy-source src dist",
     "lint": "eslint ./src ./test",
     "watch": "npm-watch",
     "precommit": "npm run lint && npm run test",

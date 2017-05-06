@@ -1,3 +1,5 @@
+// @flow
+
 import PlayerStates from './constants/PlayerStates';
 
 export default {

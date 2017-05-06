@@ -1,9 +1,19 @@
+// @flow
+
 import _ from 'lodash';
 import functionNames from './functionNames';
 import eventNames from './eventNames';
 import FunctionStateMap from './FunctionStateMap';
+import type {
+  EmitterType,
+  YouTubePlayerType
+} from './types';
 
 const YouTubePlayer = {};
+
+type EventHandlerMapType = {
+  [key: string]: (event: Object) => void
+};
 
 /**
  * Construct an object that defines an event handler for all of the YouTube
@@ -11,19 +21,17 @@ const YouTubePlayer = {};
  *
  * @todo Capture event parameters.
  * @see https://developers.google.com/youtube/iframe_api_reference#Events
- * @param {Sister} emitter
- * @returns {Object}
  */
-YouTubePlayer.proxyEvents = (emitter) => {
+YouTubePlayer.proxyEvents = (emitter: EmitterType): EventHandlerMapType => {
   const events = {};
 
-  _.forEach(eventNames, (eventName) => {
+  for (const eventName of eventNames) {
     const onEventName = 'on' + _.upperFirst(eventName);
 
     events[onEventName] = (event) => {
       emitter.trigger(eventName, event);
     };
-  });
+  }
 
   return events;
 };
@@ -33,16 +41,16 @@ YouTubePlayer.proxyEvents = (emitter) => {
  *
  * @todo Proxy all of the methods using Object.keys.
  * @todo See TRICKY below.
- * @param {Promise} playerAPIReady Promise that resolves when player is ready.
- * @param {boolean} strictState A flag designating whether or not to wait for
- * an acceptable state when calling supported functions. Default: `false`.
+ * @param playerAPIReady Promise that resolves when player is ready.
+ * @param strictState A flag designating whether or not to wait for
+ * an acceptable state when calling supported functions.
  * @returns {Object}
  */
-YouTubePlayer.promisifyPlayer = (playerAPIReady, strictState = false) => {
+YouTubePlayer.promisifyPlayer = (playerAPIReady: Promise<YouTubePlayerType>, strictState: boolean = false) => {
   const functions = {};
 
-  _.forEach(functionNames, (functionName) => {
-    if (strictState && FunctionStateMap[functionName] instanceof Object) {
+  for (const functionName of functionNames) {
+    if (strictState && FunctionStateMap[functionName]) {
       functions[functionName] = async (...args) => {
         const stateInfo = FunctionStateMap[functionName];
         const player = await playerAPIReady;
@@ -110,7 +118,7 @@ YouTubePlayer.promisifyPlayer = (playerAPIReady, strictState = false) => {
         return player[functionName].apply(player, args);
       };
     }
-  });
+  }
 
   return functions;
 };

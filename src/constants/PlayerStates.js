@@ -1,3 +1,5 @@
+// @flow
+
 export default {
   BUFFERING: 3,
   ENDED: 0,

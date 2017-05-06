@@ -2,7 +2,7 @@
   "plugins": [
     "lodash",
     "transform-object-rest-spread",
-    "transform-flow-comments",
+    "transform-flow-strip-types",
     "transform-runtime",
     "add-module-exports"
   ],

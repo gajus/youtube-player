@@ -1,3 +1,5 @@
+// @flow
+
 /**
  * @see https://developers.google.com/youtube/iframe_api_reference#Functions
  */
@@ -9,11 +11,7 @@ export default [
   'playVideo',
   'pauseVideo',
   'stopVideo',
-  'clearVideo',
-  'getVideoBytesLoaded',
-  'getVideoBytesTotal',
   'getVideoLoadedFraction',
-  'getVideoStartBytes',
   'cuePlaylist',
   'loadPlaylist',
   'nextVideo',
@@ -23,9 +21,6 @@ export default [
   'setLoop',
   'getPlaylist',
   'getPlaylistIndex',
-  'getPlaylistId',
-  'loadModule',
-  'unloadModule',
   'setOption',
   'mute',
   'unMute',
@@ -44,29 +39,11 @@ export default [
   'getDuration',
   'removeEventListener',
   'getVideoUrl',
-  'getDebugText',
-  'getVideoData',
-  'addCueRange',
-  'removeCueRange',
-  'getApiInterface',
-  'showVideoInfo',
-  'hideVideoInfo',
-  'G',
-  'C',
-  'R',
-  'aa',
-  '$',
-  'Z',
   'getVideoEmbedCode',
   'getOptions',
   'getOption',
-  'Y',
-  'X',
   'addEventListener',
   'destroy',
-  'A',
-  'P',
-  'J',
   'setSize',
   'getIframe'
 ];

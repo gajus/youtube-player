@@ -1,12 +1,14 @@
-import load from 'load-script';
+// @flow
 
-export default () => {
+import load from 'load-script';
+import type {
+  IframeApiType
+} from './types';
+
+export default (): Promise<IframeApiType> => {
   /**
    * A promise that is resolved when window.onYouTubeIframeAPIReady is called.
    * The promise is resolved with a reference to window.YT object.
-   *
-   * @param {Function} resolve
-   * @member {Object} iframeAPIReady
    */
   const iframeAPIReady = new Promise((resolve) => {
     if (window.YT && window.YT.Player && window.YT.Player instanceof Function) {
@@ -27,6 +29,7 @@ export default () => {
       resolve(window.YT);
     };
   });
+
   const protocol = window.location.protocol === 'http:' ? 'http:' : 'https:';
 
   load(protocol + '//www.youtube.com/iframe_api');
