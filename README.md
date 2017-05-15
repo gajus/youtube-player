@@ -6,6 +6,7 @@
 * [Usage](#usage)
     * [Events](#events)
 * [Examples](#examples)
+* [Debugging](#debugging)
 * [Download](#download)
 * [Running the Examples](#running-the-examples)
 
@@ -89,13 +90,16 @@ player
 player.on('stateChange', (event) => {
     // event.data
 });
- ```
- 
+
+```
+
 `player.off` removes a previously added event listener, e.g.
 
 ```js
 var listener = player.on(/* ... */);
-player.off(listener)
+
+player.off(listener);
+
 ```
 
 ## Examples
@@ -103,6 +107,19 @@ player.off(listener)
 * [Playing a video](./examples/src/playing-video/index.html).
 * [Multiple players](./examples/src/multiple-players/index.html).
 * [Registering events handlers](./examples/src/registering-event-handlers/index.html).
+
+## Debugging
+
+`youtube-player` is using [`debug`](https://www.npmjs.com/package/debug) module to expose debugging information.
+
+The `debug` namespace is "youtube-player".
+
+To display `youtube-player` logs configure `localStorage.debug`, e.g.
+
+```js
+localStorage.debug = 'youtube-player:*';
+
+```
 
 ## Download
 

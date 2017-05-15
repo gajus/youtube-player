@@ -1,6 +1,7 @@
 // @flow
 
 import _ from 'lodash';
+import createDebug from 'debug';
 import functionNames from './functionNames';
 import eventNames from './eventNames';
 import FunctionStateMap from './FunctionStateMap';
@@ -8,6 +9,8 @@ import type {
   EmitterType,
   YouTubePlayerType
 } from './types';
+
+const debug = createDebug('youtube-player');
 
 const YouTubePlayer = {};
 
@@ -29,6 +32,8 @@ YouTubePlayer.proxyEvents = (emitter: EmitterType): EventHandlerMapType => {
     const onEventName = 'on' + _.upperFirst(eventName);
 
     events[onEventName] = (event) => {
+      debug('event "%s"', onEventName, event);
+
       emitter.trigger(eventName, event);
     };
   }
