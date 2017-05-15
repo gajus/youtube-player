@@ -6,7 +6,8 @@
 [![Twitter Follow](https://img.shields.io/twitter/follow/kuizinas.svg?style=social&label=Follow)](https://twitter.com/kuizinas)
 
 * [Usage](#usage)
-    * [Events](#events)
+  * [Events](#events)
+* [Polyfills](#polyfills)
 * [Examples](#examples)
 * [Debugging](#debugging)
 * [Download](#download)
@@ -103,6 +104,12 @@ var listener = player.on(/* ... */);
 player.off(listener);
 
 ```
+
+## Polyfills
+
+Note that the built version does not inline polyfills.
+
+You need to polyfill the environment locally (e.g. using a service such as https://polyfill.io/v2/docs/).
 
 ## Examples
 
