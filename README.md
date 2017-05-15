@@ -1,7 +1,9 @@
 # YouTube Player
 
-[![NPM version](http://img.shields.io/npm/v/youtube-player.svg?style=flat-square)](https://www.npmjs.com/package/youtube-player)
+[![Travis build status](http://img.shields.io/travis/gajus/youtube-player/master.svg?style=flat-square)](https://travis-ci.org/gajus/youtube-player)
+[![NPM version](http://img.shields.io/npm/v/youtube-player.svg?style=flat-square)](https://www.npmjs.org/package/youtube-player)
 [![Canonical Code Style](https://img.shields.io/badge/code%20style-canonical-blue.svg?style=flat-square)](https://github.com/gajus/canonical)
+[![Twitter Follow](https://img.shields.io/twitter/follow/kuizinas.svg?style=social&label=Follow)](https://twitter.com/kuizinas)
 
 * [Usage](#usage)
     * [Events](#events)
