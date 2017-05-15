@@ -3,7 +3,6 @@
     "lodash",
     "transform-object-rest-spread",
     "transform-flow-strip-types",
-    "transform-runtime",
     "add-module-exports"
   ],
   "presets": [
