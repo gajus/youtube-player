@@ -1,6 +1,5 @@
 {
   "plugins": [
-    "lodash",
     "transform-object-rest-spread",
     "transform-flow-strip-types",
     "add-module-exports"
