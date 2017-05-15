@@ -4,11 +4,12 @@
     "start": "webpack-dev-server"
   },
   "devDependencies": {
-    "babel-core": "^6.4.5",
-    "babel-loader": "^6.2.1",
-    "babel-preset-es2015": "^6.3.13",
-    "babel-preset-stage-0": "^6.3.13",
-    "webpack": "^2.0.4-beta",
-    "webpack-dev-server": "^1.14.1"
+    "babel-loader": "^7.0.0",
+    "babel-preset-env": "^1.4.0",
+    "webpack": "^2.5.1",
+    "webpack-dev-server": "^2.4.5"
+  },
+  "dependencies": {
+    "youtube-player": "^5.1.0"
   }
 }

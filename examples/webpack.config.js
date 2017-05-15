@@ -1,41 +1,39 @@
-var path,
-  webpack;
+/* eslint-disable filenames/match-regex, import/no-commonjs */
 
-webpack = require('webpack');
-path = require('path');
+const path = require('path');
+const webpack = require('webpack');
 
 module.exports = {
-  devtool: 'source-map',
   context: path.resolve(__dirname, './src'),
+  devServer: {
+    contentBase: path.resolve(__dirname, './src'),
+    historyApiFallback: false,
+    host: '127.0.0.1',
+    hot: false,
+    noInfo: false,
+    port: 8000,
+    publicPath: '/',
+    quiet: false
+  },
+  devtool: 'source-map',
   entry: {
     'youtube-player': './youtube-player.js'
   },
-  devServer: {
-    contentBase: path.resolve(__dirname, './src'),
-    colors: true,
-    quiet: false,
-    noInfo: false,
-    publicPath: '/',
-    historyApiFallback: false,
-    host: '127.0.0.1',
-    port: 8000,
-    hot: true
+  module: {
+    loaders: [
+      {
+        include: path.resolve(__dirname, './src'),
+        loader: 'babel-loader',
+        test: /\.js$/
+      }
+    ]
   },
   output: {
-    path: __dirname,
     filename: '[name].js',
+    path: __dirname,
     publicPath: '/'
   },
   plugins: [
     new webpack.NoEmitOnErrorsPlugin()
-  ],
-  module: {
-    loaders: [
-      {
-        test: /\.js$/,
-        include: path.resolve(__dirname, './src'),
-        loader: 'babel-loader'
-      }
-    ]
-  }
+  ]
 };
