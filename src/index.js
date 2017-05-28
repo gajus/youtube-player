@@ -52,15 +52,19 @@ export default (maybeElementId: YouTubePlayerType | HTMLElement | string, option
 
   options.events = YouTubePlayer.proxyEvents(emitter);
 
-  const playerAPIReady = new Promise(async (resolve: (result: YouTubePlayerType) => void) => {
+  const playerAPIReady = new Promise((resolve: (result: YouTubePlayerType) => void) => {
     if (typeof maybeElementId === 'string' || maybeElementId instanceof HTMLElement) {
-      const YT = await youtubeIframeAPI;
+      // eslint-disable-next-line promise/catch-or-return
+      youtubeIframeAPI
+        .then((YT) => {
+          const player: YouTubePlayerType = new YT.Player(maybeElementId, options);
 
-      const player: YouTubePlayerType = new YT.Player(maybeElementId, options);
+          emitter.on('ready', () => {
+            resolve(player);
+          });
 
-      emitter.on('ready', () => {
-        resolve(player);
-      });
+          return null;
+        });
     } else if (typeof maybeElementId === 'object' && maybeElementId.playVideo instanceof Function) {
       const player: YouTubePlayerType = maybeElementId;
 

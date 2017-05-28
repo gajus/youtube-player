@@ -1,0 +1,23 @@
+{
+  "plugins": [
+    "transform-object-rest-spread",
+    "transform-flow-strip-types",
+    "add-module-exports"
+  ],
+  "presets": [
+    [
+      "env",
+      {
+        "debug": true,
+        "targets": {
+          "browsers": [
+            "last 2 version",
+            "not last 2 ie version",
+            ">5%"
+          ]
+        },
+        "useBuiltIns": true
+      }
+    ]
+  ]
+}

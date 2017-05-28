@@ -55,71 +55,78 @@ YouTubePlayer.promisifyPlayer = (playerAPIReady: Promise<YouTubePlayerType>, str
 
   for (const functionName of functionNames) {
     if (strictState && FunctionStateMap[functionName]) {
-      functions[functionName] = async (...args) => {
-        const stateInfo = FunctionStateMap[functionName];
-        const player = await playerAPIReady;
-        const playerState = player.getPlayerState();
+      functions[functionName] = (...args) => {
+        return playerAPIReady
+          .then((player) => {
+            const stateInfo = FunctionStateMap[functionName];
+            const playerState = player.getPlayerState();
 
-        // eslint-disable-next-line no-warning-comments
-        // TODO: Just spread the args into the function once Babel is fixed:
-        // https://github.com/babel/babel/issues/4270
-        //
-        // eslint-disable-next-line prefer-spread
-        const value = player[functionName].apply(player, args);
+            // eslint-disable-next-line no-warning-comments
+            // TODO: Just spread the args into the function once Babel is fixed:
+            // https://github.com/babel/babel/issues/4270
+            //
+            // eslint-disable-next-line prefer-spread
+            const value = player[functionName].apply(player, args);
 
-        // TRICKY: For functions like `seekTo`, a change in state must be
-        // triggered given that the resulting state could match the initial
-        // state.
-        if (
-          stateInfo.stateChangeRequired ||
+            // TRICKY: For functions like `seekTo`, a change in state must be
+            // triggered given that the resulting state could match the initial
+            // state.
+            if (
+              stateInfo.stateChangeRequired ||
 
-          // eslint-disable-next-line no-extra-parens
-          (
-            Array.isArray(stateInfo.acceptableStates) &&
-            stateInfo.acceptableStates.indexOf(playerState) === -1
-          )
-        ) {
-          await new Promise((resolve) => {
-            const onPlayerStateChange = () => {
-              const playerStateAfterChange = player.getPlayerState();
-
-              let timeout;
-
-              if (typeof stateInfo.timeout === 'number') {
-                timeout = setTimeout(() => {
-                  player.removeEventListener('onStateChange', onPlayerStateChange);
-
-                  resolve();
-                }, stateInfo.timeout);
-              }
-
-              if (
+              // eslint-disable-next-line no-extra-parens
+              (
                 Array.isArray(stateInfo.acceptableStates) &&
-                stateInfo.acceptableStates.indexOf(playerStateAfterChange) !== -1
-              ) {
-                player.removeEventListener('onStateChange', onPlayerStateChange);
+                stateInfo.acceptableStates.indexOf(playerState) === -1
+              )
+            ) {
+              return new Promise((resolve) => {
+                const onPlayerStateChange = () => {
+                  const playerStateAfterChange = player.getPlayerState();
 
-                clearTimeout(timeout);
-                resolve();
-              }
-            };
+                  let timeout;
 
-            player.addEventListener('onStateChange', onPlayerStateChange);
+                  if (typeof stateInfo.timeout === 'number') {
+                    timeout = setTimeout(() => {
+                      player.removeEventListener('onStateChange', onPlayerStateChange);
+
+                      resolve();
+                    }, stateInfo.timeout);
+                  }
+
+                  if (
+                    Array.isArray(stateInfo.acceptableStates) &&
+                    stateInfo.acceptableStates.indexOf(playerStateAfterChange) !== -1
+                  ) {
+                    player.removeEventListener('onStateChange', onPlayerStateChange);
+
+                    clearTimeout(timeout);
+
+                    resolve();
+                  }
+                };
+
+                player.addEventListener('onStateChange', onPlayerStateChange);
+              })
+                .then(() => {
+                  return value;
+                });
+            }
+
+            return value;
           });
-        }
-
-        return value;
       };
     } else {
-      functions[functionName] = async (...args) => {
-        const player = await playerAPIReady;
-
-        // eslint-disable-next-line no-warning-comments
-        // TODO: Just spread the args into the function once Babel is fixed:
-        // https://github.com/babel/babel/issues/4270
-        //
-        // eslint-disable-next-line prefer-spread
-        return player[functionName].apply(player, args);
+      functions[functionName] = (...args) => {
+        return playerAPIReady
+        .then((player) => {
+          // eslint-disable-next-line no-warning-comments
+          // TODO: Just spread the args into the function once Babel is fixed:
+          // https://github.com/babel/babel/issues/4270
+          //
+          // eslint-disable-next-line prefer-spread
+          return player[functionName].apply(player, args);
+        });
       };
     }
   }
