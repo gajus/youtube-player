@@ -2,10 +2,8 @@ language: node_js
 node_js:
   - 7
   - 6
-  - 4
 before_install:
   - npm config set depth 0
-  - npm install --global npm@4
 script:
   - npm run test
   - npm run lint
