@@ -10,9 +10,7 @@
       {
         "targets": {
           "browsers": [
-            "last 2 version",
-            "not last 2 ie version",
-            ">5%"
+            ">1%"
           ]
         },
         "useBuiltIns": true
