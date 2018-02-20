@@ -39,7 +39,7 @@ export default (maybeElementId: YouTubePlayerType | HTMLElement | string, option
   const emitter = Sister();
 
   if (!youtubeIframeAPI) {
-    youtubeIframeAPI = loadYouTubeIframeApi();
+    youtubeIframeAPI = loadYouTubeIframeApi(emitter);
   }
 
   if (options.events) {

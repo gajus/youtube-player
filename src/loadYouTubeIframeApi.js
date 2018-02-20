@@ -2,10 +2,11 @@
 
 import load from 'load-script';
 import type {
+  EmitterType,
   IframeApiType
 } from './types';
 
-export default (): Promise<IframeApiType> => {
+export default (emitter: EmitterType): Promise<IframeApiType> => {
   /**
    * A promise that is resolved when window.onYouTubeIframeAPIReady is called.
    * The promise is resolved with a reference to window.YT object.
@@ -32,7 +33,11 @@ export default (): Promise<IframeApiType> => {
 
   const protocol = window.location.protocol === 'http:' ? 'http:' : 'https:';
 
-  load(protocol + '//www.youtube.com/iframe_api');
+  load(protocol + '//www.youtube.com/iframe_api', (error) => {
+    if (error) {
+      emitter.trigger('error', error);
+    }
+  });
 
   return iframeAPIReady;
 };
