@@ -46,7 +46,7 @@ export default (maybeElementId: YouTubePlayerType | HTMLElement | string, option
     throw new Error('Event handlers cannot be overwritten.');
   }
 
-  if (typeof maybeElementId === 'string' && !document.getElementById(maybeElementId)) {
+  if ((typeof maybeElementId === 'string') && (typeof document !== 'undefined') && (!document.getElementById(maybeElementId))) {
     throw new Error('Element "' + maybeElementId + '" does not exist.');
   }
 
