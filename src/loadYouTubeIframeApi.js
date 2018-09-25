@@ -16,7 +16,6 @@ export default (emitter: EmitterType): Promise<IframeApiType> => {
       resolve(window.YT);
 
       return;
-
     } else {
       const protocol = window.location.protocol === 'http:' ? 'http:' : 'https:';
 
@@ -38,7 +37,6 @@ export default (emitter: EmitterType): Promise<IframeApiType> => {
 
       resolve(window.YT);
     };
-
   });
 
   return iframeAPIReady;
