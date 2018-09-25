@@ -16,6 +16,14 @@ export default (emitter: EmitterType): Promise<IframeApiType> => {
       resolve(window.YT);
 
       return;
+    } else {
+      const protocol = window.location.protocol === 'http:' ? 'http:' : 'https:';
+
+      load(protocol + '//www.youtube.com/iframe_api', (error) => {
+        if (error) {
+          emitter.trigger('error', error);
+        }
+      });
     }
 
     const previous = window.onYouTubeIframeAPIReady;
@@ -29,14 +37,6 @@ export default (emitter: EmitterType): Promise<IframeApiType> => {
 
       resolve(window.YT);
     };
-  });
-
-  const protocol = window.location.protocol === 'http:' ? 'http:' : 'https:';
-
-  load(protocol + '//www.youtube.com/iframe_api', (error) => {
-    if (error) {
-      emitter.trigger('error', error);
-    }
   });
 
   return iframeAPIReady;
