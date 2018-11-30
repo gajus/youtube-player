@@ -53,10 +53,14 @@ export default (maybeElementId: YouTubePlayerType | HTMLElement | string, option
   options.events = YouTubePlayer.proxyEvents(emitter);
 
   const playerAPIReady = new Promise((resolve: (result: YouTubePlayerType) => void) => {
-    if (typeof maybeElementId === 'string' || maybeElementId instanceof HTMLElement) {
-      // eslint-disable-next-line promise/catch-or-return
-      youtubeIframeAPI
-        .then((YT) => {
+    if (typeof maybeElementId === 'object' && maybeElementId.playVideo instanceof Function) {
+      const player: YouTubePlayerType = maybeElementId;
+
+      resolve(player);
+    } else { // asume maybeElementId can be rendered inside
+        // eslint-disable-next-line promise/catch-or-return
+        youtubeIframeAPI
+          .then((YT) => {
           const player: YouTubePlayerType = new YT.Player(maybeElementId, options);
 
           emitter.on('ready', () => {
@@ -65,12 +69,6 @@ export default (maybeElementId: YouTubePlayerType | HTMLElement | string, option
 
           return null;
         });
-    } else if (typeof maybeElementId === 'object' && maybeElementId.playVideo instanceof Function) {
-      const player: YouTubePlayerType = maybeElementId;
-
-      resolve(player);
-    } else {
-      throw new TypeError('Unexpected state.');
     }
   });
 
