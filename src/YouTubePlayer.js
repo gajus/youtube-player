@@ -1,4 +1,5 @@
 // @flow
+/* eslint-disable promise/prefer-await-to-then */
 
 import createDebug from 'debug';
 import functionNames from './functionNames';

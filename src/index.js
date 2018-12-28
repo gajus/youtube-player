@@ -28,7 +28,7 @@ let youtubeIframeAPI;
 /**
  * A factory function used to produce an instance of YT.Player and queue function calls and proxy events of the resulting object.
  *
- * @param elementId Either An existing YT.Player instance,
+ * @param maybeElementId Either An existing YT.Player instance,
  * the DOM element or the id of the HTML element where the API will insert an <iframe>.
  * @param options See `options` (Ignored when using an existing YT.Player instance).
  * @param strictState A flag designating whether or not to wait for
@@ -57,10 +57,11 @@ export default (maybeElementId: YouTubePlayerType | HTMLElement | string, option
       const player: YouTubePlayerType = maybeElementId;
 
       resolve(player);
-    } else { // asume maybeElementId can be rendered inside
-        // eslint-disable-next-line promise/catch-or-return
-        youtubeIframeAPI
-          .then((YT) => {
+    } else {
+      // asume maybeElementId can be rendered inside
+      // eslint-disable-next-line promise/catch-or-return
+      youtubeIframeAPI
+        .then((YT) => { // eslint-disable-line promise/prefer-await-to-then
           const player: YouTubePlayerType = new YT.Player(maybeElementId, options);
 
           emitter.on('ready', () => {
