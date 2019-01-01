@@ -28,7 +28,7 @@ let youtubeIframeAPI;
 /**
  * A factory function used to produce an instance of YT.Player and queue function calls and proxy events of the resulting object.
  *
- * @param elementId Either An existing YT.Player instance,
+ * @param maybeElementId Either An existing YT.Player instance,
  * the DOM element or the id of the HTML element where the API will insert an <iframe>.
  * @param options See `options` (Ignored when using an existing YT.Player instance).
  * @param strictState A flag designating whether or not to wait for
@@ -53,10 +53,15 @@ export default (maybeElementId: YouTubePlayerType | HTMLElement | string, option
   options.events = YouTubePlayer.proxyEvents(emitter);
 
   const playerAPIReady = new Promise((resolve: (result: YouTubePlayerType) => void) => {
-    if (typeof maybeElementId === 'string' || maybeElementId instanceof HTMLElement) {
+    if (typeof maybeElementId === 'object' && maybeElementId.playVideo instanceof Function) {
+      const player: YouTubePlayerType = maybeElementId;
+
+      resolve(player);
+    } else {
+      // asume maybeElementId can be rendered inside
       // eslint-disable-next-line promise/catch-or-return
       youtubeIframeAPI
-        .then((YT) => {
+        .then((YT) => { // eslint-disable-line promise/prefer-await-to-then
           const player: YouTubePlayerType = new YT.Player(maybeElementId, options);
 
           emitter.on('ready', () => {
@@ -65,12 +70,6 @@ export default (maybeElementId: YouTubePlayerType | HTMLElement | string, option
 
           return null;
         });
-    } else if (typeof maybeElementId === 'object' && maybeElementId.playVideo instanceof Function) {
-      const player: YouTubePlayerType = maybeElementId;
-
-      resolve(player);
-    } else {
-      throw new TypeError('Unexpected state.');
     }
   });
 
