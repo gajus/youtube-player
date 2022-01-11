@@ -46,6 +46,7 @@ export default (maybeElementId: string | HTMLElement | YouTubePlayerType, option
     throw new Error('Event handlers cannot be overwritten.');
   }
 
+  // eslint-disable-next-line unicorn/prefer-query-selector
   if (typeof maybeElementId === 'string' && !document.getElementById(maybeElementId)) {
     throw new Error('Element "' + maybeElementId + '" does not exist.');
   }
