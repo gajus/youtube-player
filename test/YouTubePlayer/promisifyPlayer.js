@@ -27,7 +27,6 @@ test('converts all API methods to asynchronous functions', async (t) => {
 
     t.true(promise instanceof Promise);
 
-    // eslint-disable-next-line babel/no-await-in-loop
     const result = await promise;
 
     t.true(result[0] === mockPlayer);
