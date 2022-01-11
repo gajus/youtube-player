@@ -45,5 +45,5 @@ export default [
   'addEventListener',
   'destroy',
   'setSize',
-  'getIframe'
+  'getIframe',
 ];
