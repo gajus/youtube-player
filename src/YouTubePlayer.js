@@ -11,13 +11,13 @@ import type {
   YouTubePlayerType,
 } from './types';
 
-const debug = createDebug('youtube-player');
-
-const YouTubePlayer = {};
-
 type EventHandlerMapType = {
   [key: string]: (event: Object) => void,
 };
+
+const debug = createDebug('youtube-player');
+
+const YouTubePlayer = {};
 
 /**
  * Construct an object that defines an event handler for all of the YouTube
