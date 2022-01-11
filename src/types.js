@@ -86,5 +86,19 @@ export type YouTubePlayerType = {
   setSize: (width: number, height: number) => Object,
   setVolume: (volume: number) => void,
   stopVideo: () => void,
-  unMute: () => void
+  unMute: () => void,
+  getSphericalProperties: () => {
+    fov: number;
+    yaw: number;
+    pitch: number;
+    roll: number;
+    enableOrientationSensor: boolean;
+  },
+  setSphericalProperties(properties: {
+    fov?: number,
+    yaw?: number,
+    pitch?: number,
+    roll?: number,
+    enableOrientationSensor?: boolean
+  }) => void
 };
