@@ -11,5 +11,8 @@
   },
   "plugins": [
     "promise"
-  ]
+  ],
+  "env": {
+    "browser": true
+  }
 }
