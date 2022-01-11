@@ -46,4 +46,6 @@ export default [
   'destroy',
   'setSize',
   'getIframe',
+  'getSphericalProperties',
+  'setSphericalProperties',
 ];
