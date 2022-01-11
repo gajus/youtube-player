@@ -27,6 +27,7 @@ export default {
 
     // TRICKY: `seekTo` may not cause a state change if no buffering is
     // required.
-    timeout: 3_000,
+    // eslint-disable-next-line unicorn/numeric-separators-style
+    timeout: 3000,
   },
 };
