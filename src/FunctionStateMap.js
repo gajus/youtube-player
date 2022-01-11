@@ -6,27 +6,28 @@ export default {
   pauseVideo: {
     acceptableStates: [
       PlayerStates.ENDED,
-      PlayerStates.PAUSED
+      PlayerStates.PAUSED,
     ],
-    stateChangeRequired: false
+    stateChangeRequired: false,
   },
   playVideo: {
     acceptableStates: [
       PlayerStates.ENDED,
-      PlayerStates.PLAYING
+      PlayerStates.PLAYING,
     ],
-    stateChangeRequired: false
+    stateChangeRequired: false,
   },
   seekTo: {
     acceptableStates: [
       PlayerStates.ENDED,
       PlayerStates.PLAYING,
-      PlayerStates.PAUSED
+      PlayerStates.PAUSED,
     ],
     stateChangeRequired: true,
 
     // TRICKY: `seekTo` may not cause a state change if no buffering is
     // required.
-    timeout: 3000
-  }
+    // eslint-disable-next-line unicorn/numeric-separators-style
+    timeout: 3000,
+  },
 };

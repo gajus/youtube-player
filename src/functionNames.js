@@ -47,5 +47,5 @@ export default [
   'setSize',
   'getIframe',
   'getSphericalProperties',
-  'setSphericalProperties'
+  'setSphericalProperties',
 ];

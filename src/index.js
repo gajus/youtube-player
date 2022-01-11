@@ -1,27 +1,27 @@
 // @flow
 
 import Sister from 'sister';
-import loadYouTubeIframeApi from './loadYouTubeIframeApi';
 import YouTubePlayer from './YouTubePlayer';
+import loadYouTubeIframeApi from './loadYouTubeIframeApi';
 import type {
-  YouTubePlayerType
+  YouTubePlayerType,
 } from './types';
 
 /**
  * @see https://developers.google.com/youtube/iframe_api_reference#Loading_a_Video_Player
  */
-type OptionsType = {
+type OptionsType = {|
   events?: Object,
   height?: number,
   playerVars?: Object,
   videoId?: string,
-  width?: number
-};
+  width?: number,
+|};
 
 /**
  * @typedef YT.Player
  * @see https://developers.google.com/youtube/iframe_api_reference
- * */
+ */
 
 let youtubeIframeAPI;
 
@@ -35,7 +35,7 @@ let youtubeIframeAPI;
  * an acceptable state when calling supported functions. Default: `false`.
  * See `FunctionStateMap.js` for supported functions and acceptable states.
  */
-export default (maybeElementId: YouTubePlayerType | HTMLElement | string, options: OptionsType = {}, strictState: boolean = false) => {
+export default (maybeElementId: string | HTMLElement | YouTubePlayerType, options: OptionsType = {}, strictState: boolean = false) => {
   const emitter = Sister();
 
   if (!youtubeIframeAPI) {
@@ -46,6 +46,7 @@ export default (maybeElementId: YouTubePlayerType | HTMLElement | string, option
     throw new Error('Event handlers cannot be overwritten.');
   }
 
+  // eslint-disable-next-line unicorn/prefer-query-selector
   if (typeof maybeElementId === 'string' && !document.getElementById(maybeElementId)) {
     throw new Error('Element "' + maybeElementId + '" does not exist.');
   }

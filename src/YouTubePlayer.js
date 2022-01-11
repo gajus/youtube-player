@@ -1,22 +1,23 @@
 // @flow
+
 /* eslint-disable promise/prefer-await-to-then */
 
 import createDebug from 'debug';
-import functionNames from './functionNames';
-import eventNames from './eventNames';
 import FunctionStateMap from './FunctionStateMap';
+import eventNames from './eventNames';
+import functionNames from './functionNames';
 import type {
   EmitterType,
-  YouTubePlayerType
+  YouTubePlayerType,
 } from './types';
+
+type EventHandlerMapType = {|
+  [key: string]: (event: Object) => void,
+  |};
 
 const debug = createDebug('youtube-player');
 
 const YouTubePlayer = {};
-
-type EventHandlerMapType = {
-  [key: string]: (event: Object) => void
-};
 
 /**
  * Construct an object that defines an event handler for all of the YouTube
@@ -49,7 +50,7 @@ YouTubePlayer.proxyEvents = (emitter: EmitterType): EventHandlerMapType => {
  * @param playerAPIReady Promise that resolves when player is ready.
  * @param strictState A flag designating whether or not to wait for
  * an acceptable state when calling supported functions.
- * @returns {Object}
+ * @returns {object}
  */
 YouTubePlayer.promisifyPlayer = (playerAPIReady: Promise<YouTubePlayerType>, strictState: boolean = false) => {
   const functions = {};
@@ -78,7 +79,7 @@ YouTubePlayer.promisifyPlayer = (playerAPIReady: Promise<YouTubePlayerType>, str
               // eslint-disable-next-line no-extra-parens
               (
                 Array.isArray(stateInfo.acceptableStates) &&
-                stateInfo.acceptableStates.indexOf(playerState) === -1
+                !stateInfo.acceptableStates.includes(playerState)
               )
             ) {
               return new Promise((resolve) => {
@@ -97,7 +98,7 @@ YouTubePlayer.promisifyPlayer = (playerAPIReady: Promise<YouTubePlayerType>, str
 
                   if (
                     Array.isArray(stateInfo.acceptableStates) &&
-                    stateInfo.acceptableStates.indexOf(playerStateAfterChange) !== -1
+                    stateInfo.acceptableStates.includes(playerStateAfterChange)
                   ) {
                     player.removeEventListener('onStateChange', onPlayerStateChange);
 
@@ -120,14 +121,14 @@ YouTubePlayer.promisifyPlayer = (playerAPIReady: Promise<YouTubePlayerType>, str
     } else {
       functions[functionName] = (...args) => {
         return playerAPIReady
-        .then((player) => {
+          .then((player) => {
           // eslint-disable-next-line no-warning-comments
           // TODO: Just spread the args into the function once Babel is fixed:
           // https://github.com/babel/babel/issues/4270
           //
           // eslint-disable-next-line prefer-spread
-          return player[functionName].apply(player, args);
-        });
+            return player[functionName].apply(player, args);
+          });
       };
     }
   }

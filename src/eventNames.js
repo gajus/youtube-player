@@ -12,5 +12,5 @@ export default [
   'playbackRateChange',
   'error',
   'apiChange',
-  'volumeChange'
+  'volumeChange',
 ];
