@@ -1,17 +1,17 @@
 // @flow
 
-export type EmitterType = {
-  trigger: (eventName: string, event: Object) => void
-};
+export type EmitterType = {|
+  trigger: (eventName: string, event: Object) => void,
+|};
 
-export type IframeApiType = {
-  Player: Function
-};
+export type IframeApiType = {|
+  Player: Function,
+|};
 
 /**
  * @see https://developers.google.com/youtube/iframe_api_reference
  */
-export type YouTubePlayerType = {
+export type YouTubePlayerType = {|
   addEventListener: (event: string, listener: Function) => void,
   destroy: () => void,
   getAvailablePlaybackRates: () => $ReadOnlyArray<number>,
@@ -23,20 +23,20 @@ export type YouTubePlayerType = {
   getOptions: () => any,
   setOption: () => void,
   setOptions: () => void,
-  cuePlaylist: (playlist: string | $ReadOnlyArray<string>, index?: number, startSeconds?: number, suggestedQuality?: string) => void | ({
+  cuePlaylist: (playlist: string | $ReadOnlyArray<string>, index?: number, startSeconds?: number, suggestedQuality?: string) => ({|
     listType: string,
     list?: string,
     index?: number,
     startSeconds?: number,
-    suggestedQuality?: string
-  }) => void,
-  loadPlaylist: (playlist: string | $ReadOnlyArray<string>, index?: number, startSeconds?: number, suggestedQuality?: string) => void | ({
+    suggestedQuality?: string,
+  |}) => void,
+  loadPlaylist: (playlist: string | $ReadOnlyArray<string>, index?: number, startSeconds?: number, suggestedQuality?: string) => ({|
     listType: string,
     list?: string,
     index?: number,
     startSeconds?: number,
-    suggestedQuality?: string
-  }) => void,
+    suggestedQuality?: string,
+  |}) => void,
   getPlaylist: () => $ReadOnlyArray<string>,
   getPlaylistIndex: () => number,
   getPlaybackQuality: () => string,
@@ -46,30 +46,30 @@ export type YouTubePlayerType = {
   getVideoLoadedFraction: () => number,
   getVideoUrl: () => string,
   getVolume: () => number,
-  cueVideoById: (videoId: string, startSeconds?: number, suggestedQuality?: string) => void | ({
+  cueVideoById: (videoId: string, startSeconds?: number, suggestedQuality?: string) => ({|
     videoId: string,
     startSeconds?: number,
     endSeconds?: number,
-    suggestedQuality?: string
-  }) => void,
-  cueVideoByUrl: (mediaContentUrl: string, startSeconds?: number, suggestedQuality?: string) => void | ({
+    suggestedQuality?: string,
+  |}) => void,
+  cueVideoByUrl: (mediaContentUrl: string, startSeconds?: number, suggestedQuality?: string) => ({|
     mediaContentUrl: string,
     startSeconds?: number,
     endSeconds?: number,
-    suggestedQuality?: string
-  }) => void,
-  loadVideoByUrl: (mediaContentUrl: string, startSeconds?: number, suggestedQuality?: string) => void | ({
+    suggestedQuality?: string,
+  |}) => void,
+  loadVideoByUrl: (mediaContentUrl: string, startSeconds?: number, suggestedQuality?: string) => ({|
     mediaContentUrl: string,
     startSeconds?: number,
     endSeconds?: number,
-    suggestedQuality?: string
-  }) => void,
-  loadVideoById: (videoId: string, startSeconds?: number, suggestedQuality?: string) => void | ({
+    suggestedQuality?: string,
+  |}) => void,
+  loadVideoById: (videoId: string, startSeconds?: number, suggestedQuality?: string) => ({|
     videoId: string,
     startSeconds?: number,
     endSeconds?: number,
-    suggestedQuality?: string
-  }) => void,
+    suggestedQuality?: string,
+  |}) => void,
   isMuted: () => boolean,
   mute: () => void,
   nextVideo: () => void,
@@ -86,5 +86,5 @@ export type YouTubePlayerType = {
   setSize: (width: number, height: number) => Object,
   setVolume: (volume: number) => void,
   stopVideo: () => void,
-  unMute: () => void
-};
+  unMute: () => void,
+|};

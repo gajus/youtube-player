@@ -6,5 +6,5 @@ export default {
   PAUSED: 2,
   PLAYING: 1,
   UNSTARTED: -1,
-  VIDEO_CUED: 5
+  VIDEO_CUED: 5,
 };

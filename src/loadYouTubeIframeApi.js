@@ -3,7 +3,7 @@
 import load from 'load-script';
 import type {
   EmitterType,
-  IframeApiType
+  IframeApiType,
 } from './types';
 
 export default (emitter: EmitterType): Promise<IframeApiType> => {

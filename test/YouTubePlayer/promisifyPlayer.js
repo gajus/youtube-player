@@ -8,7 +8,7 @@ test('is a function', (t) => {
 
 test('converts all API methods to asynchronous functions', async (t) => {
   const mockPlayer = {};
-  const mockArg = {};
+  const mockArgument = {};
   const playerAPIReady = new Promise((resolve) => {
     resolve(mockPlayer);
   });
@@ -16,11 +16,14 @@ test('converts all API methods to asynchronous functions', async (t) => {
 
   for (const fname of functionNames) {
     // use function expression instead of arrow function expression to bind its own this
-    mockPlayer[fname] = function (arg) {
-      return [this, arg];
+    mockPlayer[fname] = function (argument) {
+      return [
+        this,
+        argument,
+      ];
     };
 
-    const promise = functions[fname](mockArg);
+    const promise = functions[fname](mockArgument);
 
     t.true(promise instanceof Promise);
 
@@ -28,6 +31,6 @@ test('converts all API methods to asynchronous functions', async (t) => {
     const result = await promise;
 
     t.true(result[0] === mockPlayer);
-    t.true(result[1] === mockArg);
+    t.true(result[1] === mockArgument);
   }
 });
