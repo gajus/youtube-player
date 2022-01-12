@@ -32,7 +32,7 @@
     "flow-copy-source": "^1.1.0",
     "husky": "^0.13.3",
     "npm-watch": "^0.1.9",
-    "semantic-release": "^6.3.2"
+    "semantic-release": "^17.2.3"
   },
   "keywords": [
     "youtube",
