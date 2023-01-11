@@ -11,7 +11,7 @@
     ]
   },
   "dependencies": {
-    "debug": "^2.6.6",
+    "debug": "^4.3.4",
     "load-script": "^1.0.0",
     "sister": "^3.0.0"
   },
