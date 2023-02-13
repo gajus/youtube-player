@@ -12,4 +12,3 @@ node_modules
 !.README
 !.releaserc
 !.scripts
-!.travis.yml
