@@ -1,4 +1,4 @@
-/* eslint-disable filenames/match-regex, import/no-commonjs */
+/* eslint-disable import/no-commonjs */
 
 const path = require('path');
 const webpack = require('webpack');
@@ -11,29 +11,29 @@ module.exports = {
     host: '127.0.0.1',
     hot: false,
     noInfo: false,
-    port: 8000,
+    port: 8_000,
     publicPath: '/',
-    quiet: false
+    quiet: false,
   },
   devtool: 'source-map',
   entry: {
-    'youtube-player': './youtube-player.js'
+    'youtube-player': './youtube-player.js',
   },
   module: {
     loaders: [
       {
         include: path.resolve(__dirname, './src'),
         loader: 'babel-loader',
-        test: /\.js$/
-      }
-    ]
+        test: /\.js$/,
+      },
+    ],
   },
   output: {
     filename: '[name].js',
     path: __dirname,
-    publicPath: '/'
+    publicPath: '/',
   },
   plugins: [
-    new webpack.NoEmitOnErrorsPlugin()
-  ]
+    new webpack.NoEmitOnErrorsPlugin(),
+  ],
 };
