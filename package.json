@@ -15,6 +15,9 @@
     "load-script": "^1.0.0",
     "sister": "^3.0.0"
   },
+  "files": [
+    "dist"
+  ],
   "description": "YouTube IFrame Player API abstraction.",
   "devDependencies": {
     "@semantic-release/commit-analyzer": "^9.0.2",
