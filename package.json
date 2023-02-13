@@ -17,6 +17,9 @@
   },
   "description": "YouTube IFrame Player API abstraction.",
   "devDependencies": {
+    "@semantic-release/commit-analyzer": "^9.0.2",
+    "@semantic-release/github": "^8.0.7",
+    "@semantic-release/npm": "^9.0.2",
     "ava": "^0.19.1",
     "babel-cli": "^6.24.1",
     "babel-plugin-add-module-exports": "^0.2.1",
@@ -32,7 +35,7 @@
     "flow-copy-source": "^1.1.0",
     "husky": "^0.13.3",
     "npm-watch": "^0.1.9",
-    "semantic-release": "^17.2.3"
+    "semantic-release": "^20.1.0"
   },
   "keywords": [
     "youtube",
