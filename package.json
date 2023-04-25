@@ -32,7 +32,7 @@
     "babel-register": "^6.24.1",
     "chai": "^3.5.0",
     "eslint": "^8.6.0",
-    "eslint-config-canonical": "^33.0.1",
+    "eslint-config-canonical": "^41.0.3",
     "eslint-plugin-promise": "^6.0.0",
     "flow-bin": "^0.45.0",
     "flow-copy-source": "^1.1.0",
