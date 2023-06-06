@@ -16,6 +16,9 @@ type OptionsType = {|
   playerVars?: Object,
   videoId?: string,
   width?: number,
+  otherParams?: {|
+    forceHttpsApi?: boolean,
+  |},
 |};
 
 /**
@@ -39,7 +42,7 @@ export default (maybeElementId: string | HTMLElement | YouTubePlayerType, option
   const emitter = Sister();
 
   if (!youtubeIframeAPI) {
-    youtubeIframeAPI = loadYouTubeIframeApi(emitter);
+    youtubeIframeAPI = loadYouTubeIframeApi(emitter, options);
   }
 
   if (options.events) {
