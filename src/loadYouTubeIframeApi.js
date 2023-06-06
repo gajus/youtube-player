@@ -6,7 +6,7 @@ import type {
   IframeApiType,
 } from './types';
 
-export default (emitter: EmitterType): Promise<IframeApiType> => {
+export default (emitter: EmitterType, options = undefined): Promise<IframeApiType> => {
   /**
    * A promise that is resolved when window.onYouTubeIframeAPIReady is called.
    * The promise is resolved with a reference to window.YT object.
@@ -17,7 +17,14 @@ export default (emitter: EmitterType): Promise<IframeApiType> => {
 
       return;
     } else {
-      const protocol = window.location.protocol === 'http:' ? 'http:' : 'https:';
+      let protocol;
+
+      const forceHttpsApi = options && options.otherParams && options.otherParams.forceHttpsApi;
+      if (forceHttpsApi) {
+        protocol = 'https:';
+      } else {
+        protocol = window.location.protocol === 'http:' ? 'http:' : 'https:';
+      }
 
       load(protocol + '//www.youtube.com/iframe_api', (error) => {
         if (error) {
